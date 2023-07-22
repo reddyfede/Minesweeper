@@ -14,5 +14,5 @@ As the first solo project of the General Assembly Software Engineering bootcamp 
 
 ## Future Add-on
 
-- 
-- 
+- Timer to keep track of the time to win the game.
+- Scoreboard with prompt asking player name.
