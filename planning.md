@@ -1,6 +1,8 @@
 # Minesweeper
 
-### Objective of the game
+![Screenshot of the classic Minesweeper board](/resources/classicMinesweeper.png)
+
+### Objective of the gameg
 
 The player must guess the position of all the bombs, without touching them.
 Hints about the position of the bombs are given to the player whenever a non-bomb tile is revealed.
@@ -10,11 +12,11 @@ A revealed non-bomb tile will display the number of bombs among adjacent tiles.
 
 If the player reveals a bomb the **game is lost.**
 
-If the player manages to correcly identify the position of all the bombs the **game is won.**
+If the player manages to reveal all the tiles not containing bombs the **game is won.**
 
 ## Wireframe
 
-
+![Screenshot of a concept design for the game](/resources/concept.png)
 
 ## Pseucode
 
@@ -60,7 +62,7 @@ If the player manages to correcly identify the position of all the bombs the **g
             - if it's 0-number-element: reveal the corresponding tile and add the adjacent grid elements to be checked.
 
 
-- If a player flags every tile corrisponding to bomb-elements in the grid:
+- If all the non-bombs tiles of the board are revealed:
     - **the game is won.**
 
 - As the game ends a button will pop-up to reset the game.
