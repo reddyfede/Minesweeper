@@ -1,0 +1,48 @@
+* {
+    font-family: 'Mynerve', Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    flex-direction: column;
+    background-color: lightblue;
+    overflow: hidden;
+}
+
+main {
+
+    display: grid;
+    grid-template-columns: 6vmin 6vmin 6vmin 6vmin;
+    grid-template-rows: 6vmin 6vmin 6vmin 6vmin;
+    padding: 2vmin;
+    border: 1px solid black;
+    background-color: grey;
+}
+
+main * {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-ctr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gameBtn {
+    width: 6vmin;
+    height: 6vmin;
+    background-color: lightgrey;
+    color: black;
+    border: 0.1vmin solid black;
+    border-radius: 1vmin;
+    font-size: 3vmin;
+    outline: none;
+}
+
+#reset {
+    margin-top: 5vmin;
+}
