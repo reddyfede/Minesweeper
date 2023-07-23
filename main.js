@@ -5,6 +5,7 @@ const intBoard = [16, 16, 40]
 const expBoard = [30, 16, 99]
 const bombsIdx = []
 let board = []
+let grid = []
 
 /*----- cached element references -----*/
 
@@ -28,6 +29,23 @@ resetBtn.addEventListener("click", init)
 
 /*----- functions -----*/
 
+function init() {
+    bombCounter.innerText = ""
+    bombsIdx.length = 0
+    grid.length = 0
+
+    createBoard()
+    createGrid()
+
+    bombCounter.innerText = board[2]
+    generateBombs()
+    placeBombs()
+    populateGrid()
+
+    renderBoard()
+
+}
+
 function defineBoard(e) {
     if (e.target.classList.contains("beg")) {
         boardEl.classList.add("beginner")
@@ -42,7 +60,7 @@ function defineBoard(e) {
         boardEl.classList.remove("intermediate")
         boardEl.classList.add("expert")
     }
-    createBoard()
+    init()
 }
 
 function createBoard() {
@@ -65,11 +83,6 @@ function createBoard() {
         boardEl.appendChild(newBtn)
     }
 
-    bombCounter.innerText = board[2]
-    generateBombs()
-    placeBombs()
-    fullBoard()
-
 }
 
 function deleteBoard() {
@@ -78,11 +91,11 @@ function deleteBoard() {
     }
 }
 
-function clickTile(e) {
+function clickTile(e) {   //placeholder
     if (!e.target.classList.contains("gameTile")) {
         return
     }
-    e.target.classList.add("clicked")  //placeholder
+    e.target.classList.add("clicked")
 }
 
 function generateBombs() {
@@ -97,23 +110,19 @@ function generateBombs() {
     }
 }
 
-function placeBombs() {   //placeholder
-
-    for (el of bombsIdx){
-        document.getElementById(`idx${el}`).innerText = "B"
+function placeBombs() {
+    for (el of bombsIdx) {
+        grid[el] = "B"
     }
 }
 
-function init() {
-    bombCounter.innerText = ""
-    bombsIdx.length = 0
-    createBoard()
+function createGrid() {
+    for (let i = 0; i < board[0] * board[1]; i++) {
+        grid.push("")
+    }
 }
 
-init()
-
-
-function fullBoard() {
+function populateGrid() {
     let arr = []
 
     for (el of bombsIdx) {
@@ -138,25 +147,32 @@ function fullBoard() {
         if (el - 1 - board[0] >= 0 && (el % board[0]) !== 0) { arr.push(el - board[0] - 1) }
     }
 
-    let asd
-
     for (el of arr) {
-        asd = document.getElementById(`idx${el}`)
-        if ((asd.textContent === "") && asd.textContent !== "B") {
-            console.log(asd.textContent)
-            asd.textContent = "1"
-            
-        } else if (asd.textContent !== "B") {
-            asd.textContent = parseInt(asd.textContent) + 1
+
+        if ((grid[el] === "") && grid[el] !== "B") {
+            grid[el] = 1
+
+        } else if (grid[el] !== "B") {
+            grid[el] = grid[el] + 1
         }
     }
 
-
-    for (let i=0; i<board[0]*board[1]; i++){
-        console.log(document.getElementById(`idx${i}`).textContent)
-    }
-    console.log("fine")
-
-
 }
 
+function renderBoard() { //placeholder
+
+    for (i=0; i<grid.length; i++) {
+        if (grid[i]){
+            document.getElementById(`idx${i}`).innerText = grid[i]
+        }
+        if (grid[i] === "B"){
+            document.getElementById(`idx${i}`).style.backgroundColor = "black";
+            document.getElementById(`idx${i}`).style.color = "white";
+            
+        }
+    }
+}
+
+// start!!
+
+init()
