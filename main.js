@@ -24,7 +24,7 @@ for (btn of selectLevelBtnEls) {
 }
 
 boardEl.addEventListener("click", clickTile)
-
+boardEl.addEventListener("contextmenu", rightClickTile)
 
 resetBtn.addEventListener("click", init)
 
@@ -46,7 +46,7 @@ function init() {
     placeBombs()
     populateGrid()
 
-    renderBoard()
+    //renderBoard()
 }
 
 function defineBoard(e) {
@@ -92,6 +92,16 @@ function deleteBoard() {
     }
 }
 
+function rightClickTile(e){
+    e.preventDefault()
+    e.target.classList.toggle("flag")
+    if (e.target.innerText === ""){
+        e.target.innerText = "F"
+    } else {
+        e.target.innerText = ""
+    }
+}
+
 function clickTile(e) {   //placeholder
     if (!e.target.classList.contains("gameTile")) {
         return
@@ -131,7 +141,7 @@ function clickTile(e) {   //placeholder
 
                 document.getElementById(`idx${checkIfReveal[i]}`).classList.add("clicked")
 
-                for (el of checkGrid([checkIfReveal[i]],false)) {
+                for (el of checkGrid([checkIfReveal[i]],true)) {
                     if (!checkIfReveal.includes(el)) {
                         checkIfReveal.push(el)
                     }
@@ -179,18 +189,18 @@ function populateGrid() {
     }
 }
 
-function renderBoard() { //placeholder
+// function renderBoard() { //placeholder
 
-    for (i = 0; i < grid.length; i++) {
-        if (grid[i]) {
-            document.getElementById(`idx${i}`).innerText = grid[i]
-        }
-        if (grid[i] === "B") {
-            document.getElementById(`idx${i}`).style.backgroundColor = "black";
-            document.getElementById(`idx${i}`).style.color = "white";
-        }
-    }
-}
+//     for (i = 0; i < grid.length; i++) {
+//         if (grid[i]) {
+//             document.getElementById(`idx${i}`).innerText = grid[i]
+//         }
+//         if (grid[i] === "B") {
+//             document.getElementById(`idx${i}`).style.backgroundColor = "black";
+//             document.getElementById(`idx${i}`).style.color = "white";
+//         }
+//     }
+// }
 
 function checkGrid(arrOfIdx,boolean) {
 
@@ -225,7 +235,6 @@ function checkGrid(arrOfIdx,boolean) {
 
     return arr
 }
-
 
 // start!!
 
