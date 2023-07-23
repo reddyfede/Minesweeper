@@ -52,10 +52,10 @@ main * {
 .gameTile {
     width: 3.5vmin;
     height: 3.5vmin;
-    background-color: lightgrey;
+    background-color: rgb(179, 178, 178);
     color: black;
     border: 0.1vmin solid black;
-    border-radius: 0vmin;
+    border-radius: 0.4vmin;
     font-size: 3vmin;
     outline: none;
 }
@@ -64,9 +64,9 @@ main * {
     margin-top: 5vmin;
 }
 
-.clicked {
-    background-color: red;
-}
+ .clicked {
+    background-color: white;
+} 
 
 .flex-ctr {
     display: flex;

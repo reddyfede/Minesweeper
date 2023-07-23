@@ -3,9 +3,9 @@
 const begBoard = [9, 9, 10]       //row,col,bombs
 const intBoard = [16, 16, 40]
 const expBoard = [30, 16, 99]
-const bombsIdx = []
-let board = []
-let grid = []
+let bombsIdx
+let board
+let grid
 
 /*----- cached element references -----*/
 
@@ -31,11 +31,11 @@ resetBtn.addEventListener("click", init)
 
 function init() {
     bombCounter.innerText = ""
-    bombsIdx.length = 0
-    grid.length = 0
+    bombsIdx = []
+    
 
     createBoard()
-    createGrid()
+    grid = createGrid()
 
     bombCounter.innerText = board[2]
 
@@ -43,7 +43,7 @@ function init() {
     placeBombs()
     populateGrid()
 
-    renderBoard()
+    // renderBoard()
 }
 
 function defineBoard(e) {
@@ -94,13 +94,29 @@ function clickTile(e) {   //placeholder
     if (!e.target.classList.contains("gameTile")) {
         return
     }
+    e.target.disabled = true
     e.target.classList.add("clicked")
+    
+
+    let idx = [parseInt(e.target.getAttribute("id").slice(3))]
+    
+
+    if (grid[idx] === "B") {
+        for (el of grid){
+            if (el === "B"){
+                document.getElementById(`idx${el}`).innerText = grid[el]
+            }
+        }
+    }
+
+
+
+    
+    let arr = checkGrid(idx)
+    
 }
 
 function generateBombs() {
-
-    bombsIdx.length = 0
-
     while (bombsIdx.length < board[2]) {
         let bomb = Math.floor(Math.random() * board[0] * board[1])
         if (!bombsIdx.includes(bomb)) {
@@ -114,18 +130,23 @@ function placeBombs() {
     for (el of bombsIdx) {
         grid[el] = "B"
     }
+  
 }
 
 function createGrid() {
-    for (let i = 0; i < board[0] * board[1]; i++) {
-        grid.push("")
+    let arr = []
+    
+    for (let i = 0; i < (board[0] * board[1]); i++) {
+        arr.push("")
     }
+    console.log(arr)
+    return arr
 }
 
 function populateGrid() {
-    
-    let arr = checkGrid(bombsIdx)
 
+    let arr = checkGrid(bombsIdx)
+    
     for (el of arr) {
 
         if ((grid[el] === "") && grid[el] !== "B") {
@@ -135,20 +156,22 @@ function populateGrid() {
             grid[el] = grid[el] + 1
         }
     }
+
+    console.log(grid)
 }
 
-function renderBoard() { //placeholder
+// function renderBoard() { //placeholder
 
-    for (i = 0; i < grid.length; i++) {
-        if (grid[i]) {
-            document.getElementById(`idx${i}`).innerText = grid[i]
-        }
-        if (grid[i] === "B") {
-            document.getElementById(`idx${i}`).style.backgroundColor = "black";
-            document.getElementById(`idx${i}`).style.color = "white";
-        }
-    }
-}
+//     for (i = 0; i < grid.length; i++) {
+//         if (grid[i]) {
+//             document.getElementById(`idx${i}`).innerText = grid[i]
+//         }
+//         if (grid[i] === "B") {
+//             document.getElementById(`idx${i}`).style.backgroundColor = "black";
+//             document.getElementById(`idx${i}`).style.color = "white";
+//         }
+//     }
+// }
 
 function checkGrid(arrOfNums) {
 
@@ -157,25 +180,25 @@ function checkGrid(arrOfNums) {
     for (el of arrOfNums) {
 
         //row+1 col+0
-        if (el + board[0] <= board[0] * board[1]) { arr.push(el + board[0]) }
+        if (el + board[0] < board[0] * board[1]) { arr.push(el + board[0]) }
         //row-1 col+0
         if (el - board[0] >= 0) { arr.push(el - board[0]) }
 
         //row+0 col+1
         if (el + 1 <= board[0] * board[1] && ((el + 1) % (board[0])) !== 0) { arr.push(el + 1) }
         //row+1 col+1
-        if (el + 1 + board[0] <= board[0] * board[1] && ((el + 1) % board[0]) !== 0) { arr.push(el + board[0] + 1) }
+        if (el + 1 + board[0] < board[0] * board[1] && ((el + 1) % board[0]) !== 0) { arr.push(el + board[0] + 1) }
         //row-1 col+1
         if (el + 1 - board[0] > 0 && ((el + 1) % board[0]) !== 0) { arr.push(el - board[0] + 1) }
 
         //row+0 col-1
         if (el - 1 >= 0 && ((el % board[0]) !== 0)) { arr.push(el - 1) }
         //row+1 col-1
-        if (el - 1 + board[0] <= board[0] * board[1] && (el % board[0]) !== 0) { arr.push(el + board[0] - 1) }
+        if (el - 1 + board[0] < board[0] * board[1] && (el % board[0]) !== 0) { arr.push(el + board[0] - 1) }
         //row-1 col-1
         if (el - 1 - board[0] >= 0 && (el % board[0]) !== 0) { arr.push(el - board[0] - 1) }
     }
-
+    
     return arr
 }
 
