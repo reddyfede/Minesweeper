@@ -68,7 +68,16 @@ main * {
     background-color: white;
 } 
 
+.bomb {
+    background-color: red;
+}
+
+.flag {
+    background-color: yellow;
+}
+
 .flex-ctr {
     display: flex;
     align-items: center;
 }
+
