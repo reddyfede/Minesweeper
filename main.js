@@ -38,12 +38,12 @@ function init() {
     createGrid()
 
     bombCounter.innerText = board[2]
+
     generateBombs()
     placeBombs()
     populateGrid()
 
     renderBoard()
-
 }
 
 function defineBoard(e) {
@@ -82,7 +82,6 @@ function createBoard() {
         newBtn.innerText = ""
         boardEl.appendChild(newBtn)
     }
-
 }
 
 function deleteBoard() {
@@ -111,6 +110,7 @@ function generateBombs() {
 }
 
 function placeBombs() {
+
     for (el of bombsIdx) {
         grid[el] = "B"
     }
@@ -123,29 +123,8 @@ function createGrid() {
 }
 
 function populateGrid() {
-    let arr = []
-
-    for (el of bombsIdx) {
-
-        //next row +0
-        if (el + board[0] <= board[0] * board[1]) { arr.push(el + board[0]) }
-        //prew row +0
-        if (el - board[0] >= 0) { arr.push(el - board[0]) }
-
-        //same row +1
-        if (el + 1 <= board[0] * board[1] && ((el + 1) % (board[0])) !== 0) { arr.push(el + 1) }
-        //next row +1
-        if (el + 1 + board[0] <= board[0] * board[1] && ((el + 1) % board[0]) !== 0) { arr.push(el + board[0] + 1) }
-        //prew row +1
-        if (el + 1 - board[0] > 0 && ((el + 1) % board[0]) !== 0) { arr.push(el - board[0] + 1) }
-
-        // add same row -1
-        if (el - 1 >= 0 && ((el % board[0]) !== 0)) { arr.push(el - 1) }
-        //next row -1
-        if (el - 1 + board[0] <= board[0] * board[1] && (el % board[0]) !== 0) { arr.push(el + board[0] - 1) }
-        //prew row -1
-        if (el - 1 - board[0] >= 0 && (el % board[0]) !== 0) { arr.push(el - board[0] - 1) }
-    }
+    
+    let arr = checkGrid(bombsIdx)
 
     for (el of arr) {
 
@@ -156,22 +135,50 @@ function populateGrid() {
             grid[el] = grid[el] + 1
         }
     }
-
 }
 
 function renderBoard() { //placeholder
 
-    for (i=0; i<grid.length; i++) {
-        if (grid[i]){
+    for (i = 0; i < grid.length; i++) {
+        if (grid[i]) {
             document.getElementById(`idx${i}`).innerText = grid[i]
         }
-        if (grid[i] === "B"){
+        if (grid[i] === "B") {
             document.getElementById(`idx${i}`).style.backgroundColor = "black";
             document.getElementById(`idx${i}`).style.color = "white";
-            
         }
     }
 }
+
+function checkGrid(arrOfNums) {
+
+    let arr = []
+
+    for (el of arrOfNums) {
+
+        //row+1 col+0
+        if (el + board[0] <= board[0] * board[1]) { arr.push(el + board[0]) }
+        //row-1 col+0
+        if (el - board[0] >= 0) { arr.push(el - board[0]) }
+
+        //row+0 col+1
+        if (el + 1 <= board[0] * board[1] && ((el + 1) % (board[0])) !== 0) { arr.push(el + 1) }
+        //row+1 col+1
+        if (el + 1 + board[0] <= board[0] * board[1] && ((el + 1) % board[0]) !== 0) { arr.push(el + board[0] + 1) }
+        //row-1 col+1
+        if (el + 1 - board[0] > 0 && ((el + 1) % board[0]) !== 0) { arr.push(el - board[0] + 1) }
+
+        //row+0 col-1
+        if (el - 1 >= 0 && ((el % board[0]) !== 0)) { arr.push(el - 1) }
+        //row+1 col-1
+        if (el - 1 + board[0] <= board[0] * board[1] && (el % board[0]) !== 0) { arr.push(el + board[0] - 1) }
+        //row-1 col-1
+        if (el - 1 - board[0] >= 0 && (el % board[0]) !== 0) { arr.push(el - board[0] - 1) }
+    }
+
+    return arr
+}
+
 
 // start!!
 
