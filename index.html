@@ -11,17 +11,23 @@
 
 <body class="flex-ctr">
 
-    <div>
-        <button class="selectLevel beg">Beginner Level</button>
-        <button class="selectLevel int">Intermediate Level</button>
-        <button class="selectLevel exp">Expert Level</button>
-    </div>
+    <h1 id="gameName">Minesweeper</h1>
 
-    <h1 id="gameName">Default is beginner</h1>
+    <section class="gameSelector">
+        <h3>Select a diffuclty:</h3>
+        <div>
+            <button class="levelBtn beg">Beginner</button>
+            <button class="levelBtn int">Intermediate</button>
+            <button class="levelBtn exp">Expert</button>
+        </div>
+    </section>
+
+    <section class="bombCounter">
+        <h3>Total bombs:</h3>
+        <h3 id="bombCounter"></h3>
+    </section>
 
     <main class="board beginner">
-
-        
 
     </main>
 

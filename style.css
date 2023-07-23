@@ -10,7 +10,24 @@ body {
     overflow: hidden;
 }
 
-main {
+.gameSelector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bombCounter {
+    display: flex;
+    flex-direction: row;
+}
+
+main * {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.board {
     display: grid;
     padding: 2vmin;
     border: 1px solid black;
@@ -32,25 +49,13 @@ main {
     grid-template-rows: repeat(16, 3.5vmin);
 }
 
-main * {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.flex-ctr {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .gameTile {
     width: 3.5vmin;
     height: 3.5vmin;
     background-color: lightgrey;
     color: black;
     border: 0.1vmin solid black;
-    border-radius: 1vmin;
+    border-radius: 0.5vmin;
     font-size: 3vmin;
     outline: none;
 }
@@ -60,5 +65,10 @@ main * {
 }
 
 .clicked {
-    background-color : red;
+    background-color: red;
+}
+
+.flex-ctr {
+    display: flex;
+    align-items: center;
 }
