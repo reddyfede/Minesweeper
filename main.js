@@ -1,6 +1,6 @@
 /*----- app's state (variables) -----*/
 
-const begBoard = [9, 9, 10]       //col,row,bombs
+const begBoard = [9, 9, 10]       //row,col,bombs
 const intBoard = [16, 16, 40]
 const expBoard = [30, 16, 99]
 const bombsIdx = []
@@ -58,15 +58,17 @@ function createBoard() {
     }
 
     for (let i = 0; i < board[0] * board[1]; i++) {
-        let newBtn = document.createElement("button")
+        newBtn = document.createElement("button")
         newBtn.classList.add("gameTile")
-        newBtn.classList.add(`idx${i}`)
+        newBtn.setAttribute("id", `idx${i}`)
+        newBtn.innerText = ""
         boardEl.appendChild(newBtn)
     }
 
     bombCounter.innerText = board[2]
     generateBombs()
     placeBombs()
+    fullBoard()
 
 }
 
@@ -95,19 +97,66 @@ function generateBombs() {
     }
 }
 
-function placeBombs() {
-    for (let i = 0; i < bombsIdx.length - 1; i++) {
-        document.querySelector(`.idx${ bombsIdx[i]}`).innerText = "B"
-  }
+function placeBombs() {   //placeholder
+
+    for (el of bombsIdx){
+        document.getElementById(`idx${el}`).innerText = "B"
+    }
 }
 
 function init() {
     bombCounter.innerText = ""
     bombsIdx.length = 0
-
     createBoard()
-    console.log(bombsIdx)
-    console.log(bombsIdx.length)
 }
 
 init()
+
+
+function fullBoard() {
+    let arr = []
+
+    for (el of bombsIdx) {
+
+        //next row +0
+        if (el + board[0] <= board[0] * board[1]) { arr.push(el + board[0]) }
+        //prew row +0
+        if (el - board[0] >= 0) { arr.push(el - board[0]) }
+
+        //same row +1
+        if (el + 1 <= board[0] * board[1] && ((el + 1) % (board[0])) !== 0) { arr.push(el + 1) }
+        //next row +1
+        if (el + 1 + board[0] <= board[0] * board[1] && ((el + 1) % board[0]) !== 0) { arr.push(el + board[0] + 1) }
+        //prew row +1
+        if (el + 1 - board[0] > 0 && ((el + 1) % board[0]) !== 0) { arr.push(el - board[0] + 1) }
+
+        // add same row -1
+        if (el - 1 >= 0 && ((el % board[0]) !== 0)) { arr.push(el - 1) }
+        //next row -1
+        if (el - 1 + board[0] <= board[0] * board[1] && (el % board[0]) !== 0) { arr.push(el + board[0] - 1) }
+        //prew row -1
+        if (el - 1 - board[0] >= 0 && (el % board[0]) !== 0) { arr.push(el - board[0] - 1) }
+    }
+
+    let asd
+
+    for (el of arr) {
+        asd = document.getElementById(`idx${el}`)
+        if ((asd.textContent === "") && asd.textContent !== "B") {
+            console.log(asd.textContent)
+            asd.textContent = "1"
+            
+        } else if (asd.textContent !== "B") {
+            asd.textContent = parseInt(asd.textContent) + 1
+        }
+    }
+
+
+    for (let i=0; i<board[0]*board[1]; i++){
+        console.log(document.getElementById(`idx${i}`).textContent)
+    }
+    console.log("fine")
+
+
+}
+

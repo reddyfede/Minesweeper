@@ -55,7 +55,7 @@ main * {
     background-color: lightgrey;
     color: black;
     border: 0.1vmin solid black;
-    border-radius: 0.5vmin;
+    border-radius: 0vmin;
     font-size: 3vmin;
     outline: none;
 }
