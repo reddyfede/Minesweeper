@@ -44,7 +44,7 @@ main * {
     align-items: center;
 }
 
-.gameBtn {
+.gameTile {
     width: 3.5vmin;
     height: 3.5vmin;
     background-color: lightgrey;
@@ -57,4 +57,8 @@ main * {
 
 #reset {
     margin-top: 5vmin;
+}
+
+.clicked {
+    background-color : red;
 }

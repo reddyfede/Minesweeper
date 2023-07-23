@@ -1,20 +1,26 @@
 /*----- app's state (variables) -----*/
 
-const begBoard = [9,9]
-const intBoard = [16,16]
-const expBoard = [30,16]
+const begBoard = [9,9,10]
+const intBoard = [16,16,40]
+const expBoard = [30,16,100]
 
 /*----- cached element references -----*/
 
 boardEl = document.querySelector(".board")
+
 selectLevelBtnEls = document.querySelectorAll(".selectLevel")
 
+resetBtn = document.querySelector("#reset")
 
 /*----- event listeners -----*/
 
 for (btn of selectLevelBtnEls){
     btn.addEventListener("click", defineBoard)
 }
+
+boardEl.addEventListener("click", clickTile)
+
+resetBtn.addEventListener("click", init)
 
 /*----- functions -----*/
 
@@ -44,7 +50,7 @@ function defineBoard(e) {
 function renderBoard() {
 
     let board
-    clearBoard()
+    deleteBoard()
 
     if (boardEl.classList.contains("beginner")) {
         board = begBoard
@@ -56,18 +62,24 @@ function renderBoard() {
 
     for (let i = 0; i < board[0]*board[1]; i++){
         let newBtn = document.createElement("button")
-        newBtn.classList.add("gameBtn")
+        newBtn.classList.add("gameTile")
         newBtn.classList.add(`idx${i}`)
         boardEl.appendChild(newBtn)
     }
 }
 
-function clearBoard() {
+function deleteBoard() {
     while (boardEl.firstChild) {
         boardEl.removeChild(boardEl.lastChild);
       }    
 }
 
+function clickTile(e){
+    if (!e.target.classList.contains("gameTile")){
+        return
+    }
+    e.target.classList.add("clicked")
+}
 
 
 
