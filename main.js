@@ -146,7 +146,10 @@ function clickTile(e) {
 
         for (el of bombsIdx) {
             let tile = document.getElementById(`idx${el}`)
-            tile.innerText = grid[el]
+
+            //tile.innerText = grid[el]
+            appendItem(tile, "bomb")
+
             tile.classList.add("clicked")
             tile.classList.remove("flag")
         }
@@ -305,6 +308,27 @@ function renderWin() {
     boardEl.classList.add("win")
     boardEl.removeEventListener("click", clickTile)
     boardEl.removeEventListener("contextmenu", rightClickTile)
+}
+
+function appendItem(parent,item){
+    
+    let newItem = document.createElement("i")
+
+    newItem.classList.add("fa-sm")
+
+    if(item === "bomb"){
+        newItem.classList.add("fa-solid")
+        newItem.classList.add("fa-bomb")
+        newItem.classList.add("fa-shake")
+    }
+
+    if (item === "flag"){
+        newItem.classList.add("fa-regular")
+        newItem.classList.add("fa-flag")
+    }
+    
+    
+    parent.appendChild(newItem)
 }
 
 /*----- start!! -----*/
