@@ -107,20 +107,20 @@ function rightClickTile(e) {
 
     e.target.classList.add("clicked")
 
-    if (e.target.dataset.value === "F"){
+    if (e.target.dataset.value === "F") {
         e.target.innerText = "?"
         e.target.classList.remove("flag")
-        e.target.setAttribute("data-value","?")
+        e.target.setAttribute("data-value", "?")
 
-    } else if (e.target.dataset.value === "?"){
+    } else if (e.target.dataset.value === "?") {
         e.target.innerText = ""
-        e.target.setAttribute("data-value","")
+        e.target.setAttribute("data-value", "")
         e.target.classList.remove("clicked")
 
     } else {
 
         e.target.classList.add("flag")
-        e.target.setAttribute("data-value","F")
+        e.target.setAttribute("data-value", "F")
     }
 }
 
@@ -141,7 +141,6 @@ function clickTile(e) {
 
     if (grid[idx] === "B") {
 
-        e.target.classList.add("bomb")
         boardEl.classList.add("bomb")
         boardEl.removeEventListener("click", clickTile)
         boardEl.removeEventListener("contextmenu", rightClickTile)
@@ -150,10 +149,16 @@ function clickTile(e) {
             let tile = document.getElementById(`idx${el}`)
             tile.innerText = ""
             appendItem(tile, "bomb")
-
             tile.classList.add("clicked")
             tile.classList.remove("flag")
-            
+            tile.classList.add("bomb")
+
+            window.setTimeout(function (el) {
+                for (el of bombsIdx) {
+                    tile.classList.remove("bomb")
+                }
+                e.target.classList.add("bomb")
+            }, 100)
         }
 
     } else if (grid[idx] !== 0) {
@@ -312,35 +317,33 @@ function renderWin() {
     boardEl.removeEventListener("contextmenu", rightClickTile)
 }
 
-function appendItem(parent,item){
-    
+function appendItem(parent, item) {
+
     let newItem = document.createElement("i")
     newItem.classList.add("fa-sm")
 
-    if(item === "bomb"){
+    if (item === "bomb") {
         newItem.classList.add("fa-solid")
         newItem.classList.add("fa-bomb")
         newItem.classList.add("fa-shake")
     }
 
-    if (item === "flag"){
+    if (item === "flag") {
         newItem.classList.add("fa-regular")
         newItem.classList.add("fa-flag")
         newItem.classList.add("test")
 
     }
-    
-    if (item === "qmark"){
+
+    if (item === "qmark") {
         newItem.classList.add("fa-solid")
         newItem.classList.add("fa-question")
         newItem.classList.add("fa-flip")
 
     }
-    
+
     parent.appendChild(newItem)
 }
-
-
 
 /*----- start!! -----*/
 

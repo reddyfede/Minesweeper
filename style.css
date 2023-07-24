@@ -75,7 +75,7 @@ main * {
 
 .flag {
    /* background-color: yellow; */
-   background-image: url(/resources/flag.svg);
+   background-image: url(./resources/flag.svg);
    background-repeat: no-repeat;
    background-position: center;
    background-size:contain;
