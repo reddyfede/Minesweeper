@@ -128,11 +128,11 @@ function clickTile(e) {   //placeholder
         e.target.classList.add("bomb")
 
         for (el of bombsIdx) {
-            document.getElementById(`idx${el}`).innerText = grid[el]
-            document.getElementById(`idx${el}`).classList.add("clicked")
-            document.getElementById(`idx${el}`).classList.remove("flag")
+            let tile = document.getElementById(`idx${el}`)
+            tile.innerText = grid[el]
+            tile.classList.add("clicked")
+            tile.classList.remove("flag")
             boardEl.removeEventListener("click", clickTile)
-            e.target.classList.remove("flag")
         }
 
     } else if (grid[idx] !== 0) {
@@ -146,21 +146,20 @@ function clickTile(e) {   //placeholder
 
         for (i = 0; i < checkIfReveal.length; i++) {
 
+            let element = document.getElementById(`idx${checkIfReveal[i]}`)
+            element.classList.add("clicked")
+            element.classList.remove("flag")
+            element.disabled = true  
+
             if (grid[checkIfReveal[i]] !== 0) {
 
-                document.getElementById(`idx${checkIfReveal[i]}`).innerText = grid[checkIfReveal[i]]
-                document.getElementById(`idx${checkIfReveal[i]}`).classList.add("clicked")
-                document.getElementById(`idx${checkIfReveal[i]}`).classList.remove("flag")
-                document.getElementById(`idx${checkIfReveal[i]}`).disabled = true
-                colorNum(document.getElementById(`idx${checkIfReveal[i]}`))
+                element.innerText = grid[checkIfReveal[i]]
+                colorNum(element)
 
             } else {
-
-                document.getElementById(`idx${checkIfReveal[i]}`).classList.add("clicked")
-                document.getElementById(`idx${checkIfReveal[i]}`).classList.remove("flag")
-                document.getElementById(`idx${checkIfReveal[i]}`).innerText = ""
-                document.getElementById(`idx${checkIfReveal[i]}`).disabled = true
-
+                  
+                element.innerText = ""
+               
                 for (el of checkGrid([checkIfReveal[i]], true)) {
                     if (!checkIfReveal.includes(el)) {
                         checkIfReveal.push(el)
