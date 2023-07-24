@@ -65,6 +65,10 @@ main * {
     margin-top: 5vmin;
 }
 
+.rightclicked {
+    background-color: yellow;
+}
+
 .clicked {
     background-color: white;
 }

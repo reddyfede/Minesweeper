@@ -105,7 +105,7 @@ function rightClickTile(e) {
         return
     }
 
-    e.target.classList.add("clicked")
+    e.target.classList.add("rightclicked")
 
     if (e.target.dataset.value === "F") {
         e.target.innerText = "?"
@@ -115,7 +115,7 @@ function rightClickTile(e) {
     } else if (e.target.dataset.value === "?") {
         e.target.innerText = ""
         e.target.setAttribute("data-value", "")
-        e.target.classList.remove("clicked")
+        e.target.classList.remove("rightclicked")
 
     } else {
 
@@ -149,9 +149,12 @@ function clickTile(e) {
             let tile = document.getElementById(`idx${el}`)
             tile.innerText = ""
             appendItem(tile, "bomb")
-            tile.classList.add("clicked")
             tile.classList.remove("flag")
             tile.classList.add("bomb")
+
+            if (!tile.classList.contains("rightclicked")){
+                tile.classList.add("clicked")
+            }
 
             window.setTimeout(function (el) {
                 for (el of bombsIdx) {
@@ -315,6 +318,11 @@ function renderWin() {
     boardEl.classList.add("win")
     boardEl.removeEventListener("click", clickTile)
     boardEl.removeEventListener("contextmenu", rightClickTile)
+
+    for (el of bombsIdx){
+        document.getElementById(`idx${el}`).classList.add("flag")
+        document.getElementById(`idx${el}`).classList.add("rightclicked")
+    }
 }
 
 function appendItem(parent, item) {
