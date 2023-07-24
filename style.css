@@ -74,7 +74,11 @@ main * {
 }
 
 .flag {
-    background-color: yellow;
+   /* background-color: yellow; */
+   background-image: url(/resources/flag.svg);
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size:contain;
 }
 
 .win {
@@ -113,3 +117,4 @@ main * {
 .num8 {
     color: grey;
 }
+

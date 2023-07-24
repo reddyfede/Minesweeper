@@ -105,20 +105,22 @@ function rightClickTile(e) {
         return
     }
 
-    switch (e.target.innerText) {
-        case "":
-            e.target.innerText = "F"
-            e.target.classList.add("flag")
-            break;
-        case "F":
-            e.target.innerText = "?"
-            e.target.classList.remove("flag")
-            e.target.classList.add("clicked")
-            break;
-        case "?":
-            e.target.innerText = ""
-            e.target.classList.remove("clicked")
-            break;
+    e.target.classList.add("clicked")
+
+    if (e.target.dataset.value === "F"){
+        e.target.innerText = "?"
+        e.target.classList.remove("flag")
+        e.target.setAttribute("data-value","?")
+
+    } else if (e.target.dataset.value === "?"){
+        e.target.innerText = ""
+        e.target.setAttribute("data-value","")
+        e.target.classList.remove("clicked")
+
+    } else {
+
+        e.target.classList.add("flag")
+        e.target.setAttribute("data-value","F")
     }
 }
 
@@ -146,12 +148,12 @@ function clickTile(e) {
 
         for (el of bombsIdx) {
             let tile = document.getElementById(`idx${el}`)
-
-            //tile.innerText = grid[el]
+            tile.innerText = ""
             appendItem(tile, "bomb")
 
             tile.classList.add("clicked")
             tile.classList.remove("flag")
+            
         }
 
     } else if (grid[idx] !== 0) {
@@ -313,7 +315,6 @@ function renderWin() {
 function appendItem(parent,item){
     
     let newItem = document.createElement("i")
-
     newItem.classList.add("fa-sm")
 
     if(item === "bomb"){
@@ -325,11 +326,21 @@ function appendItem(parent,item){
     if (item === "flag"){
         newItem.classList.add("fa-regular")
         newItem.classList.add("fa-flag")
+        newItem.classList.add("test")
+
     }
     
+    if (item === "qmark"){
+        newItem.classList.add("fa-solid")
+        newItem.classList.add("fa-question")
+        newItem.classList.add("fa-flip")
+
+    }
     
     parent.appendChild(newItem)
 }
+
+
 
 /*----- start!! -----*/
 
