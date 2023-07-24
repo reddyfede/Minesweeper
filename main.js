@@ -113,9 +113,7 @@ function rightClickTile(e) {
             e.target.classList.remove("clicked")
             break;
     }
-
 }
-
 
 function clickTile(e) {   //placeholder
     if (!e.target.classList.contains("gameTile")) {
@@ -135,6 +133,7 @@ function clickTile(e) {   //placeholder
             document.getElementById(`idx${el}`).innerText = grid[el]
             document.getElementById(`idx${el}`).classList.add("clicked")
             boardEl.removeEventListener("click", clickTile)
+            e.target.classList.remove("flag")
         }
 
     } else if (grid[idx] !== 0) {
