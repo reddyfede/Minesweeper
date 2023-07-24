@@ -134,6 +134,7 @@ function clickTile(e) {   //placeholder
             document.getElementById(`idx${el}`).classList.add("clicked")
             document.getElementById(`idx${el}`).classList.remove("flag")
             boardEl.removeEventListener("click", clickTile)
+            e.target.classList.remove("flag")
         }
 
     } else if (grid[idx] !== 0) {
