@@ -4,8 +4,10 @@ const begBoard = [9, 9, 10]       //row,col,bombs
 const intBoard = [16, 16, 40]
 const expBoard = [30, 16, 99]
 let bombsIdx
+let emptyIdx
 let board
 let grid
+let victoryGrid
 
 /*----- cached element references -----*/
 
@@ -32,12 +34,17 @@ resetBtn.addEventListener("click", init)
 
 function init() {
     boardEl.addEventListener("click", clickTile)
+    boardEl.addEventListener("contextmenu", rightClickTile)
+    boardEl.classList.remove("bomb")
+    boardEl.classList.remove("win")
 
     bombCounter.innerText = ""
     bombsIdx = []
+    vIdx = []
 
     createBoard()
-    grid = createGrid()
+    grid = createGrid(0)
+    victoryGrid = createGrid("v")
 
     bombCounter.innerText = board[2]
 
@@ -48,7 +55,7 @@ function init() {
 }
 
 function defineBoard(e) {
-    
+
     boardEl.classList.remove("beginner")
     boardEl.classList.remove("intermediate")
     boardEl.classList.remove("expert")
@@ -91,6 +98,9 @@ function deleteBoard() {
 
 function rightClickTile(e) {
     e.preventDefault()
+    if (!e.target.classList.contains("gameTile")) {
+        return
+    }
     if (e.target.disabled) {
         return
     }
@@ -112,8 +122,11 @@ function rightClickTile(e) {
     }
 }
 
-function clickTile(e) {   //placeholder
+function clickTile(e) {
     if (!e.target.classList.contains("gameTile")) {
+        return
+    }
+    if (e.target.disabled) {
         return
     }
     e.target.disabled = true
@@ -125,40 +138,46 @@ function clickTile(e) {   //placeholder
     if (grid[idx] === "B") {
 
         e.target.classList.add("bomb")
+        boardEl.classList.add("bomb")
+        boardEl.removeEventListener("click", clickTile)
+        boardEl.removeEventListener("contextmenu", rightClickTile)
 
         for (el of bombsIdx) {
             let tile = document.getElementById(`idx${el}`)
             tile.innerText = grid[el]
             tile.classList.add("clicked")
             tile.classList.remove("flag")
-            boardEl.removeEventListener("click", clickTile)
         }
 
     } else if (grid[idx] !== 0) {
 
         e.target.innerText = grid[idx]
         colorNum(e.target)
+        victoryGrid[idx] = grid[idx]
+        checkWin()
 
     } else {
 
-        let checkIfReveal = checkGrid([idx])
+        let checkIfReveal = checkGrid([idx], true)
 
         for (i = 0; i < checkIfReveal.length; i++) {
 
             let element = document.getElementById(`idx${checkIfReveal[i]}`)
             element.classList.add("clicked")
             element.classList.remove("flag")
-            element.disabled = true  
+            element.disabled = true
 
             if (grid[checkIfReveal[i]] !== 0) {
 
                 element.innerText = grid[checkIfReveal[i]]
                 colorNum(element)
+                victoryGrid[[checkIfReveal[i]]] = grid[[checkIfReveal[i]]]
 
             } else {
-                  
+
                 element.innerText = ""
-               
+                victoryGrid[[checkIfReveal[i]]] = 0
+
                 for (el of checkGrid([checkIfReveal[i]], true)) {
                     if (!checkIfReveal.includes(el)) {
                         checkIfReveal.push(el)
@@ -167,6 +186,7 @@ function clickTile(e) {   //placeholder
 
             }
         }
+        checkWin()
     }
 }
 
@@ -177,6 +197,12 @@ function generateBombs() {
             bombsIdx.push(bomb)
         }
     }
+    bombsIdx.sort(function (a, b) {
+        if (a > b) {
+            return 1
+        }
+        return -1
+    })
 }
 
 function placeBombs() {
@@ -185,14 +211,13 @@ function placeBombs() {
     }
 }
 
-function createGrid() {
+function createGrid(value) {
 
     let arr = []
 
     for (let i = 0; i < (board[0] * board[1]); i++) {
-        arr.push(0)
+        arr.push(value)
     }
-
     return arr
 }
 
@@ -237,7 +262,6 @@ function checkGrid(arrOfIdx, boolean) {
             if (el - 1 - board[0] >= 0 && (el % board[0]) !== 0) { arr.push(el - board[0] - 1) }
         }
     }
-
     return arr
 }
 
@@ -245,6 +269,35 @@ function colorNum(el) {
     el.classList.add(`num${el.innerText}`)
 }
 
+function checkWin() {
+
+    vIdx.length = 0
+    console.log("checkin")
+    let vPos = victoryGrid.indexOf("v")
+
+    while (vPos !== -1) {
+        vIdx.push(vPos)
+        vPos = victoryGrid.indexOf("v", vPos + 1)
+    }
+
+    let win = true
+
+    for (i = 0; i < vIdx.length; i++) {
+        if (vIdx[i] !== bombsIdx[i]) {
+            win = false
+        }
+    }
+
+    if (win === true) {
+        renderWin()
+    }
+}
+
+function renderWin() {
+    boardEl.classList.add("win")
+    boardEl.removeEventListener("click", clickTile)
+    boardEl.removeEventListener("contextmenu", rightClickTile)
+}
 
 /*----- start!! -----*/
 
