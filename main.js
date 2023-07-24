@@ -113,9 +113,7 @@ function rightClickTile(e) {
             e.target.classList.remove("clicked")
             break;
     }
-
 }
-
 
 function clickTile(e) {   //placeholder
     if (!e.target.classList.contains("gameTile")) {
@@ -134,6 +132,7 @@ function clickTile(e) {   //placeholder
         for (el of bombsIdx) {
             document.getElementById(`idx${el}`).innerText = grid[el]
             document.getElementById(`idx${el}`).classList.add("clicked")
+            document.getElementById(`idx${el}`).classList.remove("flag")
             boardEl.removeEventListener("click", clickTile)
         }
 
