@@ -4,7 +4,7 @@ const begBoard = [9, 9, 10]       //row,col,bombs
 const intBoard = [16, 16, 40]
 const expBoard = [30, 16, 99]
 let bombsIdx
-let emptyIdx
+let vIdx
 let board
 let grid
 let victoryGrid
@@ -123,12 +123,14 @@ function rightClickTile(e) {
 }
 
 function clickTile(e) {
+
     if (!e.target.classList.contains("gameTile")) {
         return
     }
     if (e.target.disabled) {
         return
     }
+
     e.target.disabled = true
     e.target.classList.add("clicked")
     e.target.classList.remove("flag")
@@ -191,12 +193,16 @@ function clickTile(e) {
 }
 
 function generateBombs() {
+
     while (bombsIdx.length < board[2]) {
+
         let bomb = Math.floor(Math.random() * board[0] * board[1])
+
         if (!bombsIdx.includes(bomb)) {
             bombsIdx.push(bomb)
         }
     }
+
     bombsIdx.sort(function (a, b) {
         if (a > b) {
             return 1
@@ -206,6 +212,7 @@ function generateBombs() {
 }
 
 function placeBombs() {
+
     for (el of bombsIdx) {
         grid[el] = "B"
     }
@@ -218,6 +225,7 @@ function createGrid(value) {
     for (let i = 0; i < (board[0] * board[1]); i++) {
         arr.push(value)
     }
+
     return arr
 }
 
@@ -272,7 +280,7 @@ function colorNum(el) {
 function checkWin() {
 
     vIdx.length = 0
-    console.log("checkin")
+
     let vPos = victoryGrid.indexOf("v")
 
     while (vPos !== -1) {
@@ -280,15 +288,15 @@ function checkWin() {
         vPos = victoryGrid.indexOf("v", vPos + 1)
     }
 
-    let win = true
+    let win1 = true
 
     for (i = 0; i < vIdx.length; i++) {
         if (vIdx[i] !== bombsIdx[i]) {
-            win = false
+            win1 = false
         }
     }
 
-    if (win === true) {
+    if (win1) {
         renderWin()
     }
 }

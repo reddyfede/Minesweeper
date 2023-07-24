@@ -82,3 +82,4 @@ If the player manages to reveal all the tiles not containing bombs the **game is
 
 - Timer to keep track of the time to win the game.
 - Scoreboard with prompt asking player name.
+- First click always safe
