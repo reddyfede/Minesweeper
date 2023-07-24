@@ -92,15 +92,30 @@ function deleteBoard() {
     }
 }
 
-function rightClickTile(e){
+function rightClickTile(e) {
     e.preventDefault()
-    e.target.classList.toggle("flag")
-    if (e.target.innerText === ""){
-        e.target.innerText = "F"
-    } else {
-        e.target.innerText = ""
+    if (e.target.disabled) {
+        return
     }
+
+    switch (e.target.innerText) {
+        case "":
+            e.target.innerText = "F"
+            e.target.classList.add("flag")
+            break;
+        case "F":
+            e.target.innerText = "?"
+            e.target.classList.remove("flag")
+            e.target.classList.add("clicked")
+            break;
+        case "?":
+            e.target.innerText = ""
+            e.target.classList.remove("clicked")
+            break;
+    }
+
 }
+
 
 function clickTile(e) {   //placeholder
     if (!e.target.classList.contains("gameTile")) {
@@ -108,12 +123,14 @@ function clickTile(e) {   //placeholder
     }
     e.target.disabled = true
     e.target.classList.add("clicked")
+    e.target.classList.remove("flag")
 
     let idx = parseInt(e.target.getAttribute("id").slice(3))
-    console.log(idx)
+
     if (grid[idx] === "B") {
 
         e.target.classList.add("bomb")
+
         for (el of bombsIdx) {
             document.getElementById(`idx${el}`).innerText = grid[el]
             document.getElementById(`idx${el}`).classList.add("clicked")
@@ -128,20 +145,20 @@ function clickTile(e) {   //placeholder
 
         let checkIfReveal = checkGrid([idx])
 
-        console.log(checkIfReveal)
-
         for (i = 0; i < checkIfReveal.length; i++) {
 
             if (grid[checkIfReveal[i]] !== 0) {
-                console.log(grid[checkIfReveal[i]])
+
                 document.getElementById(`idx${checkIfReveal[i]}`).innerText = grid[checkIfReveal[i]]
                 document.getElementById(`idx${checkIfReveal[i]}`).classList.add("clicked")
                 document.getElementById(`idx${checkIfReveal[i]}`).disabled = true
+
             } else {
 
                 document.getElementById(`idx${checkIfReveal[i]}`).classList.add("clicked")
+                document.getElementById(`idx${checkIfReveal[i]}`).disabled = true
 
-                for (el of checkGrid([checkIfReveal[i]],true)) {
+                for (el of checkGrid([checkIfReveal[i]], true)) {
                     if (!checkIfReveal.includes(el)) {
                         checkIfReveal.push(el)
                     }
@@ -180,7 +197,7 @@ function createGrid() {
 
 function populateGrid() {
 
-    let arr = checkGrid(bombsIdx,true)
+    let arr = checkGrid(bombsIdx, true)
 
     for (el of arr) {
         if (grid[el] !== "B") {
@@ -199,10 +216,10 @@ function populateGrid() {
 //             document.getElementById(`idx${i}`).style.backgroundColor = "black";
 //             document.getElementById(`idx${i}`).style.color = "white";
 //         }
-//     }
+//     } 
 // }
 
-function checkGrid(arrOfIdx,boolean) {
+function checkGrid(arrOfIdx, boolean) {
 
     let arr = []
 
@@ -219,22 +236,24 @@ function checkGrid(arrOfIdx,boolean) {
         if (el - 1 >= 0 && ((el % board[0]) !== 0)) { arr.push(el - 1) }
 
 
-        if (boolean){
-        //row+1 col+1
-        if (el + 1 + board[0] < board[0] * board[1] && ((el + 1) % board[0]) !== 0) { arr.push(el + board[0] + 1) }
-        //row-1 col+1
-        if (el + 1 - board[0] > 0 && ((el + 1) % board[0]) !== 0) { arr.push(el - board[0] + 1) }
+        if (boolean) {
+            //row+1 col+1
+            if (el + 1 + board[0] < board[0] * board[1] && ((el + 1) % board[0]) !== 0) { arr.push(el + board[0] + 1) }
+            //row-1 col+1
+            if (el + 1 - board[0] > 0 && ((el + 1) % board[0]) !== 0) { arr.push(el - board[0] + 1) }
 
-        
-        //row+1 col-1
-        if (el - 1 + board[0] < board[0] * board[1] && (el % board[0]) !== 0) { arr.push(el + board[0] - 1) }
-        //row-1 col-1
-        if (el - 1 - board[0] >= 0 && (el % board[0]) !== 0) { arr.push(el - board[0] - 1) }
+
+            //row+1 col-1
+            if (el - 1 + board[0] < board[0] * board[1] && (el % board[0]) !== 0) { arr.push(el + board[0] - 1) }
+            //row-1 col-1
+            if (el - 1 - board[0] >= 0 && (el % board[0]) !== 0) { arr.push(el - board[0] - 1) }
         }
     }
 
     return arr
 }
+
+
 
 // start!!
 

@@ -64,9 +64,9 @@ main * {
     margin-top: 5vmin;
 }
 
- .clicked {
+.clicked {
     background-color: white;
-} 
+}
 
 .bomb {
     background-color: red;
@@ -81,3 +81,30 @@ main * {
     align-items: center;
 }
 
+.num1 {
+    color: blue;
+}
+
+.num2 {
+    color: green;
+}
+
+.num3 {
+    color: red;
+}
+
+.num4 {
+    color: purple;
+}
+
+.num5 {
+    color: maroon;
+}
+
+.num6 {
+    color: turquoise;
+}
+
+.num8 {
+    color: grey;
+}
