@@ -15,9 +15,9 @@ boardEl = document.querySelector(".board")
 
 selectLevelBtnEls = document.querySelectorAll(".levelBtn")
 
-resetBtn = document.getElementById("reset")
+resetBtnEl = document.getElementById("reset")
 
-bombCounter = document.getElementById("bombCounter")
+counterEl = document.getElementById("counter")
 
 /*----- event listeners -----*/
 
@@ -28,7 +28,7 @@ for (btn of selectLevelBtnEls) {
 boardEl.addEventListener("click", clickTile)
 boardEl.addEventListener("contextmenu", rightClickTile)
 
-resetBtn.addEventListener("click", init)
+resetBtnEl.addEventListener("click", init)
 
 /*----- functions -----*/
 
@@ -38,7 +38,7 @@ function init() {
     boardEl.classList.remove("bomb")
     boardEl.classList.remove("win")
 
-    bombCounter.innerText = ""
+    counterEl.innerText = ""
     bombsIdx = []
     vIdx = []
 
@@ -46,7 +46,7 @@ function init() {
     grid = createGrid(0)
     victoryGrid = createGrid("v")
 
-    bombCounter.innerText = board[2]
+    counterEl.innerText = board[2]
 
     generateBombs()
     placeBombs()
@@ -118,10 +118,10 @@ function rightClickTile(e) {
         e.target.classList.remove("rightclicked")
 
     } else {
-
         e.target.classList.add("flag")
         e.target.setAttribute("data-value", "F")
     }
+    updateCounter()
 }
 
 function clickTile(e) {
@@ -148,11 +148,11 @@ function clickTile(e) {
         for (el of bombsIdx) {
             let tile = document.getElementById(`idx${el}`)
             tile.innerText = ""
-            appendItem(tile, "bomb")
+            appendBomb(tile)
             tile.classList.remove("flag")
             tile.classList.add("bomb")
 
-            if (!tile.classList.contains("rightclicked")){
+            if (!tile.classList.contains("rightclicked")) {
                 tile.classList.add("clicked")
             }
 
@@ -203,6 +203,7 @@ function clickTile(e) {
         }
         checkWin()
     }
+    updateCounter()
 }
 
 function generateBombs() {
@@ -319,38 +320,24 @@ function renderWin() {
     boardEl.removeEventListener("click", clickTile)
     boardEl.removeEventListener("contextmenu", rightClickTile)
 
-    for (el of bombsIdx){
+    for (el of bombsIdx) {
         document.getElementById(`idx${el}`).classList.add("flag")
         document.getElementById(`idx${el}`).classList.add("rightclicked")
     }
 }
 
-function appendItem(parent, item) {
+function appendBomb(parent) {
+    let newBomb = document.createElement("i")
+    newBomb.classList.add("fa-sm")
+    newBomb.classList.add("fa-solid")
+    newBomb.classList.add("fa-bomb")
+    newBomb.classList.add("fa-shake")
+    parent.appendChild(newBomb)
+}
 
-    let newItem = document.createElement("i")
-    newItem.classList.add("fa-sm")
-
-    if (item === "bomb") {
-        newItem.classList.add("fa-solid")
-        newItem.classList.add("fa-bomb")
-        newItem.classList.add("fa-shake")
-    }
-
-    if (item === "flag") {
-        newItem.classList.add("fa-regular")
-        newItem.classList.add("fa-flag")
-        newItem.classList.add("test")
-
-    }
-
-    if (item === "qmark") {
-        newItem.classList.add("fa-solid")
-        newItem.classList.add("fa-question")
-        newItem.classList.add("fa-flip")
-
-    }
-
-    parent.appendChild(newItem)
+function updateCounter() {
+    let flags = document.querySelectorAll(".flag")
+    counterEl.innerText = board[2] - flags.length
 }
 
 /*----- start!! -----*/
