@@ -36,7 +36,6 @@ function init() {
     bombCounter.innerText = ""
     bombsIdx = []
 
-
     createBoard()
     grid = createGrid()
 
@@ -46,7 +45,6 @@ function init() {
     placeBombs()
     populateGrid()
 
-    //renderBoard()
 }
 
 function defineBoard(e) {
@@ -211,19 +209,6 @@ function populateGrid() {
     }
 }
 
-// function renderBoard() { //placeholder
-
-//     for (i = 0; i < grid.length; i++) {
-//         if (grid[i]) {
-//             document.getElementById(`idx${i}`).innerText = grid[i]
-//         }
-//         if (grid[i] === "B") {
-//             document.getElementById(`idx${i}`).style.backgroundColor = "black";
-//             document.getElementById(`idx${i}`).style.color = "white";
-//         }
-//     } 
-// }
-
 function checkGrid(arrOfIdx, boolean) {
 
     let arr = []
@@ -236,7 +221,7 @@ function checkGrid(arrOfIdx, boolean) {
         if (el - board[0] >= 0) { arr.push(el - board[0]) }
 
         //row+0 col+1
-        if (el + 1 <= board[0] * board[1] && ((el + 1) % (board[0])) !== 0) { arr.push(el + 1) }
+        if (el + 1 < board[0] * board[1] && ((el + 1) % (board[0])) !== 0) { arr.push(el + 1) }
         //row+0 col-1
         if (el - 1 >= 0 && ((el % board[0]) !== 0)) { arr.push(el - 1) }
 
@@ -258,11 +243,11 @@ function checkGrid(arrOfIdx, boolean) {
     return arr
 }
 
-function colorNum(el){
+function colorNum(el) {
     el.classList.add(`num${el.innerText}`)
 }
 
 
-// start!!
+/*----- start!! -----*/
 
 init()
