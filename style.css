@@ -58,6 +58,7 @@ main * {
     border-radius: 0.4vmin;
     font-size: 3vmin;
     outline: none;
+    font-weight: bold;
 }
 
 #reset {
