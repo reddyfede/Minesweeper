@@ -35,23 +35,23 @@ main * {
 }
 
 .beginner {
-    grid-template-columns: repeat(9, 3.5vmin);
-    grid-template-rows: repeat(9, 3.5vmin);
+    grid-template-columns: repeat(9, minmax(22px, 3.5vmin));
+    grid-template-rows: repeat(9, minmax(22px,3.5vmin));
 }
 
 .intermediate {
-    grid-template-columns: repeat(16, 3.5vmin);
-    grid-template-rows: repeat(16, 3.5vmin);
+    grid-template-columns: repeat(16, minmax(22px, 3.5vmin));
+    grid-template-rows: repeat(16, minmax(22px, 3.5vmin));
 }
 
 .expert {
-    grid-template-columns: repeat(30, 3.5vmin);
-    grid-template-rows: repeat(16, 3.5vmin);
+    grid-template-columns: repeat(30, minmax(22px, 3.5vmin));
+    grid-template-rows: repeat(16, minmax(22px, 3.5vmin));
 }
 
 .gameTile {
-    width: 3.5vmin;
-    height: 3.5vmin;
+    width: minmax(22px,3.5vmin);
+    height: minmax(22px,3.5vmin);
     background-color: rgb(179, 178, 178);
     color: black;
     border: 0.1vmin solid black;
