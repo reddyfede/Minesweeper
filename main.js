@@ -123,7 +123,7 @@ function clickTile(e) {   //placeholder
     }
     e.target.disabled = true
     e.target.classList.add("clicked")
-    e.target.classList.remove()
+    e.target.classList.remove("flag")
 
     let idx = parseInt(e.target.getAttribute("id").slice(3))
 
@@ -152,12 +152,15 @@ function clickTile(e) {   //placeholder
 
                 document.getElementById(`idx${checkIfReveal[i]}`).innerText = grid[checkIfReveal[i]]
                 document.getElementById(`idx${checkIfReveal[i]}`).classList.add("clicked")
+                document.getElementById(`idx${checkIfReveal[i]}`).classList.remove("flag")
                 document.getElementById(`idx${checkIfReveal[i]}`).disabled = true
                 colorNum(document.getElementById(`idx${checkIfReveal[i]}`))
 
             } else {
 
                 document.getElementById(`idx${checkIfReveal[i]}`).classList.add("clicked")
+                document.getElementById(`idx${checkIfReveal[i]}`).classList.remove("flag")
+                document.getElementById(`idx${checkIfReveal[i]}`).innerText = ""
                 document.getElementById(`idx${checkIfReveal[i]}`).disabled = true
 
                 for (el of checkGrid([checkIfReveal[i]], true)) {
