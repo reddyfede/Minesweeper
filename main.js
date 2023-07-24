@@ -48,17 +48,16 @@ function init() {
 }
 
 function defineBoard(e) {
+    
+    boardEl.classList.remove("beginner")
+    boardEl.classList.remove("intermediate")
+    boardEl.classList.remove("expert")
+
     if (e.target.classList.contains("beg")) {
         boardEl.classList.add("beginner")
-        boardEl.classList.remove("intermediate")
-        boardEl.classList.remove("expert")
     } else if (e.target.classList.contains("int")) {
-        boardEl.classList.remove("beginner")
         boardEl.classList.add("intermediate")
-        boardEl.classList.remove("expert")
     } else if (e.target.classList.contains("exp")) {
-        boardEl.classList.remove("beginner")
-        boardEl.classList.remove("intermediate")
         boardEl.classList.add("expert")
     }
     init()
