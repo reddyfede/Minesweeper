@@ -4,7 +4,7 @@
 }
 
 body {
-    height: 100vh;
+    height: 100%;
     flex-direction: column;
     background-color: lightblue;
     overflow: hidden;
@@ -56,7 +56,7 @@ main * {
     color: black;
     border: 0.1vmin solid black;
     border-radius: 0.4vmin;
-    font-size: 3vmin;
+    font-size: calc(12px + 1.5vmin);
     outline: none;
     font-weight: bold;
 }
