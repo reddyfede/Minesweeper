@@ -8,6 +8,7 @@ let vIdx
 let board
 let grid
 let victoryGrid
+let unsortedBombsIdx
 
 /*----- cached element references -----*/
 
@@ -40,6 +41,7 @@ function init() {
 
     counterEl.innerText = ""
     bombsIdx = []
+    unsortedBombsIdx = []
     vIdx = []
 
     createBoard()
@@ -145,24 +147,7 @@ function clickTile(e) {
         boardEl.removeEventListener("click", clickTile)
         boardEl.removeEventListener("contextmenu", rightClickTile)
 
-        for (el of bombsIdx) {
-            let tile = document.getElementById(`idx${el}`)
-            tile.innerText = ""
-            appendBomb(tile)
-            tile.classList.remove("flag")
-            tile.classList.add("bomb")
-
-            if (!tile.classList.contains("rightclicked")) {
-                tile.classList.add("clicked")
-            }
-
-            window.setTimeout(function () {
-                for (el of bombsIdx) {
-                    tile.classList.remove("bomb")
-                }
-                e.target.classList.add("bomb")
-            }, 100)
-        }
+        revealBombs(e.target, idx)
 
     } else if (grid[idx] !== 0) {
 
@@ -217,6 +202,8 @@ function generateBombs() {
             bombsIdx.push(bomb)
         }
     }
+
+    unsortedBombsIdx = [...bombsIdx]
 
     bombsIdx.sort(function (a, b) {
         if (a > b) {
@@ -303,15 +290,15 @@ function checkWin() {
         vPos = victoryGrid.indexOf("v", vPos + 1)
     }
 
-    let win1 = true
+    let win = true
 
     for (i = 0; i < vIdx.length; i++) {
         if (vIdx[i] !== bombsIdx[i]) {
-            win1 = false
+            win = false
         }
     }
-    console.log(win1)
-    if (win1) {
+
+    if (win) {
         renderWin()
     }
 }
@@ -339,6 +326,67 @@ function appendBomb(parent) {
 function updateCounter() {
     let flags = document.querySelectorAll(".flag")
     counterEl.innerText = board[2] - flags.length
+}
+
+function revealBombs(target, idx) {
+
+    target.innerText = ""
+    appendBomb(target)
+    target.classList.remove("flag")
+    target.classList.add("bomb")
+
+    unsortedBombsIdx.splice(unsortedBombsIdx.indexOf(idx), 1)
+    
+    resetBtnEl.disabled = true
+    for (el of selectLevelBtnEls){
+        el.disabled = true
+    }
+
+    let i = 0;
+    let j = 0
+
+    let timer = setInterval(function () {
+
+        let tile = document.getElementById(`idx${unsortedBombsIdx[i]}`)
+
+        tile.innerText = ""
+        appendBomb(tile)
+        tile.classList.remove("flag")
+        tile.classList.add("bomb")
+
+        if (!tile.classList.contains("rightclicked")) {
+            tile.classList.add("clicked")
+        }
+
+        if (i === unsortedBombsIdx.length - 1) {
+            clearInterval(timer)
+        }
+
+        i++
+
+    }, 1000/board[2])
+
+    setTimeout(function () {
+
+        let timer2 = setInterval(function () {
+
+            let tile = document.getElementById(`idx${unsortedBombsIdx[j]}`)
+
+            tile.classList.remove("bomb")
+            if (j === unsortedBombsIdx.length - 1) {
+                clearInterval(timer2)
+                resetBtnEl.disabled = false
+                for (el of selectLevelBtnEls){
+                    el.disabled = false
+                }
+            }
+
+            j++
+
+        }, 1000/board[2])
+
+    }, 100)
+
 }
 
 /*----- start!! -----*/
