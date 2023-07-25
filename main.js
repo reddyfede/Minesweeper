@@ -156,7 +156,7 @@ function clickTile(e) {
                 tile.classList.add("clicked")
             }
 
-            window.setTimeout(function (el) {
+            window.setTimeout(function () {
                 for (el of bombsIdx) {
                     tile.classList.remove("bomb")
                 }
@@ -169,9 +169,10 @@ function clickTile(e) {
         e.target.innerText = grid[idx]
         colorNum(e.target)
         victoryGrid[idx] = grid[idx]
-        checkWin()
 
     } else {
+
+        victoryGrid[idx] = 0
 
         let checkIfReveal = checkGrid([idx], true)
 
@@ -201,8 +202,8 @@ function clickTile(e) {
 
             }
         }
-        checkWin()
     }
+    checkWin()
     updateCounter()
 }
 
@@ -309,7 +310,7 @@ function checkWin() {
             win1 = false
         }
     }
-
+    console.log(win1)
     if (win1) {
         renderWin()
     }
