@@ -28,6 +28,8 @@ for (btn of selectLevelBtnEls) {
 
 boardEl.addEventListener("click", clickTile)
 boardEl.addEventListener("contextmenu", rightClickTile)
+boardEl.addEventListener("mouseover", overTile)
+boardEl.addEventListener("mouseout", overTile)
 
 resetBtnEl.addEventListener("click", init)
 
@@ -96,6 +98,21 @@ function deleteBoard() {
     while (boardEl.firstChild) {
         boardEl.removeChild(boardEl.lastChild);
     }
+}
+
+function overTile(e) {
+    
+    if (!e.target.classList.contains("gameTile")) {
+        return
+    }
+    if (e.target.disabled) {
+        return
+    }
+    if (e.target.classList.contains("rightclicked")){
+        return
+    }
+
+    e.target.classList.toggle("over")
 }
 
 function rightClickTile(e) {
@@ -336,9 +353,9 @@ function revealBombs(target, idx) {
     target.classList.add("bomb")
 
     unsortedBombsIdx.splice(unsortedBombsIdx.indexOf(idx), 1)
-    
+
     resetBtnEl.disabled = true
-    for (el of selectLevelBtnEls){
+    for (el of selectLevelBtnEls) {
         el.disabled = true
     }
 
@@ -364,7 +381,7 @@ function revealBombs(target, idx) {
 
         i++
 
-    }, 1000/board[2])
+    }, 1000 / board[2])
 
     setTimeout(function () {
 
@@ -376,14 +393,14 @@ function revealBombs(target, idx) {
             if (j === unsortedBombsIdx.length - 1) {
                 clearInterval(timer2)
                 resetBtnEl.disabled = false
-                for (el of selectLevelBtnEls){
+                for (el of selectLevelBtnEls) {
                     el.disabled = false
                 }
             }
 
             j++
 
-        }, 1000/board[2])
+        }, 1000 / board[2])
 
     }, 100)
 

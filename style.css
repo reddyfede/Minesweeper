@@ -52,7 +52,7 @@ main * {
 .gameTile {
     width: minmax(22px,3.5vmin);
     height: minmax(22px,3.5vmin);
-    background-color: rgb(179, 178, 178);
+    background-color: rgb(179, 179, 179);
     color: black;
     border: 0.1vmin solid black;
     border-radius: 0.4vmin;
@@ -63,6 +63,10 @@ main * {
 
 #reset {
     margin-top: 5vmin;
+}
+
+.over {
+    background-color: rgb(220, 220, 220);
 }
 
 .rightclicked {
@@ -78,7 +82,6 @@ main * {
 }
 
 .flag {
-   /* background-color: yellow; */
    background-image: url(./resources/flag.svg);
    background-repeat: no-repeat;
    background-position: center;
