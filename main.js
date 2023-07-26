@@ -1,6 +1,6 @@
 /*----- app's state (variables) -----*/
 
-const begBoard = [9, 9, 10]       //row,col,bombs
+const begBoard = [9, 9, 10]       //row length, col length ,number of bombs
 const intBoard = [16, 16, 40]
 const expBoard = [30, 16, 99]
 let bombsIdx
@@ -10,7 +10,9 @@ let grid
 let victoryGrid
 let unsortedBombsIdx
 
+
 /*----- cached element references -----*/
+
 
 boardEl = document.querySelector(".board")
 
@@ -20,7 +22,9 @@ resetBtnEl = document.getElementById("reset")
 
 counterEl = document.getElementById("counter")
 
+
 /*----- event listeners -----*/
+
 
 for (btn of selectLevelBtnEls) {
     btn.addEventListener("click", defineBoard)
@@ -33,9 +37,13 @@ boardEl.addEventListener("mouseout", overTile)
 
 resetBtnEl.addEventListener("click", init)
 
+
 /*----- functions -----*/
 
+
+//initialize the game.
 function init() {
+
     boardEl.addEventListener("click", clickTile)
     boardEl.addEventListener("contextmenu", rightClickTile)
     boardEl.classList.remove("bomb")
@@ -55,11 +63,11 @@ function init() {
     generateBombs()
     placeBombs()
     populateGrid()
-
 }
 
+//based on the click of the player assign class value beginner/intermediate/expert to the element storing the baord.
 function defineBoard(e) {
-
+    
     boardEl.classList.remove("beginner")
     boardEl.classList.remove("intermediate")
     boardEl.classList.remove("expert")
@@ -71,9 +79,11 @@ function defineBoard(e) {
     } else if (e.target.classList.contains("exp")) {
         boardEl.classList.add("expert")
     }
+
     init()
 }
 
+//based on the class value of the element storing the board create the board in the dom appending button element to the board.
 function createBoard() {
 
     deleteBoard()
@@ -94,12 +104,103 @@ function createBoard() {
     }
 }
 
+//remove every alement appended to the board.
 function deleteBoard() {
+
     while (boardEl.firstChild) {
         boardEl.removeChild(boardEl.lastChild);
     }
 }
 
+//generate a "grid" array of value based on the selected board.
+function createGrid(value) {
+
+    let arr = []
+
+    for (let i = 0; i < (board[0] * board[1]); i++) {
+        arr.push(value)
+    }
+
+    return arr
+}
+
+//randomize an array of numbers, representing indexes of the bombs, sort the array.
+function generateBombs() {
+
+    while (bombsIdx.length < board[2]) {
+
+        let bomb = Math.floor(Math.random() * board[0] * board[1])
+
+        if (!bombsIdx.includes(bomb)) {
+            bombsIdx.push(bomb)
+        }
+    }
+
+    unsortedBombsIdx = [...bombsIdx]
+
+    bombsIdx.sort(function (a, b) {
+        if (a > b) {
+            return 1
+        }
+        return -1
+    })
+}
+
+//in the game-grid array put "B" at the idexes of the bombs.
+function placeBombs() {
+
+    for (el of bombsIdx) {
+        grid[el] = "B"
+    }
+}
+
+//call checkGrid function to put numbers around bomb tile.
+function populateGrid() {
+
+    let arr = checkGrid(bombsIdx, true)
+
+    for (el of arr) {
+        if (grid[el] !== "B") {
+            grid[el] = grid[el] + 1
+        }
+    }
+}
+
+//given an array of numbers, return an array of numbers representing indexes of the tiles of the grid around the given array elements.
+function checkGrid(arrOfIdx, boolean) {
+
+    let arr = []
+
+    for (el of arrOfIdx) {
+
+        //row+1 col+0
+        if (el + board[0] < board[0] * board[1]) { arr.push(el + board[0]) }
+        //row-1 col+0
+        if (el - board[0] >= 0) { arr.push(el - board[0]) }
+
+        //row+0 col+1
+        if (el + 1 < board[0] * board[1] && ((el + 1) % (board[0])) !== 0) { arr.push(el + 1) }
+        //row+0 col-1
+        if (el - 1 >= 0 && ((el % board[0]) !== 0)) { arr.push(el - 1) }
+
+
+        if (boolean) {
+            //row+1 col+1
+            if (el + 1 + board[0] < board[0] * board[1] && ((el + 1) % board[0]) !== 0) { arr.push(el + board[0] + 1) }
+            //row-1 col+1
+            if (el + 1 - board[0] > 0 && ((el + 1) % board[0]) !== 0) { arr.push(el - board[0] + 1) }
+
+
+            //row+1 col-1
+            if (el - 1 + board[0] < board[0] * board[1] && (el % board[0]) !== 0) { arr.push(el + board[0] - 1) }
+            //row-1 col-1
+            if (el - 1 - board[0] >= 0 && (el % board[0]) !== 0) { arr.push(el - board[0] - 1) }
+        }
+    }
+    return arr
+}
+
+//at mouseover or mouseout of a board tile toggle a class.
 function overTile(e) {
     
     if (!e.target.classList.contains("gameTile")) {
@@ -115,8 +216,11 @@ function overTile(e) {
     e.target.classList.toggle("over")
 }
 
+//at rightclick of a board tile cycle between flag - question mark - default. update flag counter.
 function rightClickTile(e) {
+
     e.preventDefault()
+
     if (!e.target.classList.contains("gameTile")) {
         return
     }
@@ -143,6 +247,11 @@ function rightClickTile(e) {
     updateCounter()
 }
 
+//at click of a board tile:
+//if the tile is a bomb -> call revealbomb function.
+//if the tile is a number !0 -> reveal the tile. put the value of the element in the victry-grid. call the colorNum function.
+//if the tile is a 0 -> call the checkGrid on that number, iterate for every 0 found by checkGrid. put value of the element in the victory-grid.
+//call checkWin function, update flag counter.
 function clickTile(e) {
 
     if (!e.target.classList.contains("gameTile")) {
@@ -209,93 +318,89 @@ function clickTile(e) {
     updateCounter()
 }
 
-function generateBombs() {
-
-    while (bombsIdx.length < board[2]) {
-
-        let bomb = Math.floor(Math.random() * board[0] * board[1])
-
-        if (!bombsIdx.includes(bomb)) {
-            bombsIdx.push(bomb)
-        }
-    }
-
-    unsortedBombsIdx = [...bombsIdx]
-
-    bombsIdx.sort(function (a, b) {
-        if (a > b) {
-            return 1
-        }
-        return -1
-    })
-}
-
-function placeBombs() {
-
-    for (el of bombsIdx) {
-        grid[el] = "B"
-    }
-}
-
-function createGrid(value) {
-
-    let arr = []
-
-    for (let i = 0; i < (board[0] * board[1]); i++) {
-        arr.push(value)
-    }
-
-    return arr
-}
-
-function populateGrid() {
-
-    let arr = checkGrid(bombsIdx, true)
-
-    for (el of arr) {
-        if (grid[el] !== "B") {
-            grid[el] = grid[el] + 1
-        }
-    }
-}
-
-function checkGrid(arrOfIdx, boolean) {
-
-    let arr = []
-
-    for (el of arrOfIdx) {
-
-        //row+1 col+0
-        if (el + board[0] < board[0] * board[1]) { arr.push(el + board[0]) }
-        //row-1 col+0
-        if (el - board[0] >= 0) { arr.push(el - board[0]) }
-
-        //row+0 col+1
-        if (el + 1 < board[0] * board[1] && ((el + 1) % (board[0])) !== 0) { arr.push(el + 1) }
-        //row+0 col-1
-        if (el - 1 >= 0 && ((el % board[0]) !== 0)) { arr.push(el - 1) }
-
-
-        if (boolean) {
-            //row+1 col+1
-            if (el + 1 + board[0] < board[0] * board[1] && ((el + 1) % board[0]) !== 0) { arr.push(el + board[0] + 1) }
-            //row-1 col+1
-            if (el + 1 - board[0] > 0 && ((el + 1) % board[0]) !== 0) { arr.push(el - board[0] + 1) }
-
-
-            //row+1 col-1
-            if (el - 1 + board[0] < board[0] * board[1] && (el % board[0]) !== 0) { arr.push(el + board[0] - 1) }
-            //row-1 col-1
-            if (el - 1 - board[0] >= 0 && (el % board[0]) !== 0) { arr.push(el - board[0] - 1) }
-        }
-    }
-    return arr
-}
-
+//assign a class to the tile based on the innertext.
 function colorNum(el) {
     el.classList.add(`num${el.innerText}`)
 }
 
+//start a timer to call the append bomb function for every elements corresponing to the bombs-index array, starting with the clicked bomb.
+function revealBombs(target, idx) {
+
+    target.innerText = ""
+    appendBomb(target)
+    target.classList.remove("flag")
+    target.classList.add("bomb")
+
+    unsortedBombsIdx.splice(unsortedBombsIdx.indexOf(idx), 1)
+
+    resetBtnEl.disabled = true
+    for (el of selectLevelBtnEls) {
+        el.disabled = true
+    }
+
+    let i = 0
+    let j = 0
+
+    let timer = setInterval(function () {
+
+        let tile = document.getElementById(`idx${unsortedBombsIdx[i]}`)
+
+        tile.innerText = ""
+        appendBomb(tile)
+        tile.classList.remove("flag")
+        tile.classList.add("bomb")
+
+        if (!tile.classList.contains("rightclicked")) {
+            tile.classList.add("clicked")
+        }
+
+        if (i === unsortedBombsIdx.length - 1) {
+            clearInterval(timer)
+        }
+
+        i++
+    }, 1000 / board[2])
+
+    setTimeout(function () {
+
+        let timer2 = setInterval(function () {
+
+            let tile = document.getElementById(`idx${unsortedBombsIdx[j]}`)
+
+            tile.classList.remove("bomb")
+            if (j === unsortedBombsIdx.length - 1) {
+                clearInterval(timer2)
+                resetBtnEl.disabled = false
+                for (el of selectLevelBtnEls) {
+                    el.disabled = false
+                }
+            }
+
+            j++
+
+        }, 1000 / board[2])
+    }, 100)
+}
+
+//create a bomb-element and append it to the parent element.
+function appendBomb(parent) {
+
+    let newBomb = document.createElement("i")
+
+    newBomb.classList.add("fa-sm")
+    newBomb.classList.add("fa-solid")
+    newBomb.classList.add("fa-bomb")
+    newBomb.classList.add("fa-shake")
+
+    parent.appendChild(newBomb)
+}
+
+//update the flag counter based on the flag on the board.
+function updateCounter() {
+    counterEl.innerText = board[2] - document.querySelectorAll(".flag").length
+}
+
+//if the empty elements of victory-grid correspond to the bombs-index-array the game is won, call render win function.
 function checkWin() {
 
     vIdx.length = 0
@@ -320,91 +425,14 @@ function checkWin() {
     }
 }
 
+//change background color to win color, disable event listener.
 function renderWin() {
+
     boardEl.classList.add("win")
     boardEl.removeEventListener("click", clickTile)
     boardEl.removeEventListener("contextmenu", rightClickTile)
-
-    for (el of bombsIdx) {
-        document.getElementById(`idx${el}`).classList.add("flag")
-        document.getElementById(`idx${el}`).classList.add("rightclicked")
-    }
 }
 
-function appendBomb(parent) {
-    let newBomb = document.createElement("i")
-    newBomb.classList.add("fa-sm")
-    newBomb.classList.add("fa-solid")
-    newBomb.classList.add("fa-bomb")
-    newBomb.classList.add("fa-shake")
-    parent.appendChild(newBomb)
-}
-
-function updateCounter() {
-    let flags = document.querySelectorAll(".flag")
-    counterEl.innerText = board[2] - flags.length
-}
-
-function revealBombs(target, idx) {
-
-    target.innerText = ""
-    appendBomb(target)
-    target.classList.remove("flag")
-    target.classList.add("bomb")
-
-    unsortedBombsIdx.splice(unsortedBombsIdx.indexOf(idx), 1)
-
-    resetBtnEl.disabled = true
-    for (el of selectLevelBtnEls) {
-        el.disabled = true
-    }
-
-    let i = 0;
-    let j = 0
-
-    let timer = setInterval(function () {
-
-        let tile = document.getElementById(`idx${unsortedBombsIdx[i]}`)
-
-        tile.innerText = ""
-        appendBomb(tile)
-        tile.classList.remove("flag")
-        tile.classList.add("bomb")
-
-        if (!tile.classList.contains("rightclicked")) {
-            tile.classList.add("clicked")
-        }
-
-        if (i === unsortedBombsIdx.length - 1) {
-            clearInterval(timer)
-        }
-
-        i++
-
-    }, 1000 / board[2])
-
-    setTimeout(function () {
-
-        let timer2 = setInterval(function () {
-
-            let tile = document.getElementById(`idx${unsortedBombsIdx[j]}`)
-
-            tile.classList.remove("bomb")
-            if (j === unsortedBombsIdx.length - 1) {
-                clearInterval(timer2)
-                resetBtnEl.disabled = false
-                for (el of selectLevelBtnEls) {
-                    el.disabled = false
-                }
-            }
-
-            j++
-
-        }, 1000 / board[2])
-
-    }, 100)
-
-}
 
 /*----- start!! -----*/
 
