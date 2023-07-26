@@ -51,7 +51,7 @@ function init() {
     boardEl.classList.remove("win")
 
     flagCounterEl.innerText = 0
-    
+
     bombsIdx = []
     unsortedBombsIdx = []
     vIdx = []
@@ -69,7 +69,7 @@ function init() {
 
 //based on the click of the player assign class value beginner/intermediate/expert to the element storing the baord.
 function defineBoard(e) {
-    
+
     boardEl.classList.remove("beginner")
     boardEl.classList.remove("intermediate")
     boardEl.classList.remove("expert")
@@ -176,27 +176,43 @@ function checkGrid(arrOfIdx, boolean) {
     for (el of arrOfIdx) {
 
         //row+1 col+0
-        if (el + board[0] < board[0] * board[1]) { arr.push(el + board[0]) }
+        if (el + board[0] < board[0] * board[1]) {
+            arr.push(el + board[0])
+        }
         //row-1 col+0
-        if (el - board[0] >= 0) { arr.push(el - board[0]) }
+        if (el - board[0] >= 0) {
+            arr.push(el - board[0])
+        }
 
         //row+0 col+1
-        if (el + 1 < board[0] * board[1] && ((el + 1) % (board[0])) !== 0) { arr.push(el + 1) }
+        if (el + 1 < board[0] * board[1] && ((el + 1) % (board[0])) !== 0) {
+            arr.push(el + 1)
+        }
         //row+0 col-1
-        if (el - 1 >= 0 && ((el % board[0]) !== 0)) { arr.push(el - 1) }
+        if (el - 1 >= 0 && ((el % board[0]) !== 0)) {
+            arr.push(el - 1)
+        }
 
 
         if (boolean) {
             //row+1 col+1
-            if (el + 1 + board[0] < board[0] * board[1] && ((el + 1) % board[0]) !== 0) { arr.push(el + board[0] + 1) }
+            if (el + 1 + board[0] < board[0] * board[1] && ((el + 1) % board[0]) !== 0) {
+                arr.push(el + board[0] + 1)
+            }
             //row-1 col+1
-            if (el + 1 - board[0] > 0 && ((el + 1) % board[0]) !== 0) { arr.push(el - board[0] + 1) }
+            if (el + 1 - board[0] > 0 && ((el + 1) % board[0]) !== 0) {
+                arr.push(el - board[0] + 1)
+            }
 
 
             //row+1 col-1
-            if (el - 1 + board[0] < board[0] * board[1] && (el % board[0]) !== 0) { arr.push(el + board[0] - 1) }
+            if (el - 1 + board[0] < board[0] * board[1] && (el % board[0]) !== 0) {
+                arr.push(el + board[0] - 1)
+            }
             //row-1 col-1
-            if (el - 1 - board[0] >= 0 && (el % board[0]) !== 0) { arr.push(el - board[0] - 1) }
+            if (el - 1 - board[0] >= 0 && (el % board[0]) !== 0) {
+                arr.push(el - board[0] - 1)
+            }
         }
     }
     return arr
@@ -204,14 +220,14 @@ function checkGrid(arrOfIdx, boolean) {
 
 //at mouseover or mouseout of a board tile toggle a class.
 function overTile(e) {
-    
+
     if (!e.target.classList.contains("gameTile")) {
         return
     }
     if (e.target.disabled) {
         return
     }
-    if (e.target.classList.contains("rightclicked")){
+    if (e.target.classList.contains("rightclicked")) {
         return
     }
 

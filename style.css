@@ -1,12 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
 * {
-    font-family: 'Mynerve', Arial, Helvetica, sans-serif;
+    font-family: 'Share Tech Mono', monospace;
     box-sizing: border-box;
+    font-size: 2.5vmin;
+}
+
+#gameName {
+    font-family: 'Black Ops One', cursive;
+    text-transform: capitalize;
+    letter-spacing: 0.2vmin;
+    font-weight: 400;
+    text-shadow:
+        -1px 0px 0px black,
+        1px 0px 0px black,
+        0px -1px 0px black,
+        0px 1px 0px black;
+    outline: 0.1vmin solid black;
+    color: teal;
+    padding: 0 1.5vmin 0 1.5vmin;
+    margin: 1vmin 0 0 0;
+    background-color: lightblue;
+    border: 1vmin solid teal;
+    font-size: calc(15px + 5vmin);
+    border-radius: 0.5vmin;
+}
+
+.gameSelector {
+    height: 15vmin;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gameSelector>div {
+    height: 5vmin;
+    width: 55vmin;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.levelBtn, #reset {
+    font-size: 2.5vmin;
+    background-color: lightblue;
+    border: 0.5vmin solid teal;
+    border-radius: 0.5vmin;
+    outline: 0.1vmin solid black;
+    height: fit-content;
+}
+
+.levelBtn:hover, #reset:hover {
+    background-color: rgb(114, 186, 196);
+    font-size: 3vmin;
 }
 
 body {
     height: 100%;
     flex-direction: column;
-    background-color: lightblue;
+    background-color: whitesmoke;
     overflow: hidden;
 }
 
@@ -29,6 +82,10 @@ body {
     gap: 0.5vmin;
 }
 
+.bombCounter>div>h3 {
+    margin: 0;
+}
+
 main * {
     display: flex;
     justify-content: center;
@@ -38,8 +95,9 @@ main * {
 .board {
     display: grid;
     padding: 2vmin;
-    border: 1px solid black;
-    background-color: grey;
+    background-color: teal;
+    border-radius: 0.5vmin;
+    border: 0.1vmin solid black;
 }
 
 .beginner {
@@ -60,37 +118,30 @@ main * {
 .gameTile {
     width: minmax(22px, 3.5vmin);
     height: minmax(22px, 3.5vmin);
-    background-color: rgb(179, 179, 179);
+    background-color: lightblue;
     color: black;
     border: 0.1vmin solid black;
     border-radius: 0.4vmin;
     font-size: calc(12px + 1.5vmin);
-    outline: none;
     font-weight: bold;
+    font-family: 'Mynerve', Arial, Helvetica, sans-serif;
 }
 
 #reset {
-    margin-top: 5vmin;
+    margin-top: 3vmin;
 }
 
-.over {
-    background-color: rgb(220, 220, 220);
-    border: 0.3vmin solid black;
-}
-
-.rightclicked {
-    background-color: yellow;
-    border: 0.1vmin solid black;
+.over, .rightclicked {
+    background-color: rgb(114, 186, 196);
 }
 
 .clicked {
     background-color: white;
-    border: 0.1vmin solid black;
 }
 
 .bomb {
     background-color: red;
-    transition: all 0.2s linear;
+    transition: all 0.1s linear;
 }
 
 .flag {
@@ -102,7 +153,7 @@ main * {
 
 .win {
     background-color: green;
-    transition: all 0.1s linear;
+    transition: all 1s linear;
 }
 
 .flex-ctr {
