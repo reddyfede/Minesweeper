@@ -7,10 +7,10 @@ As the first solo project of the General Assembly Software Engineering bootcamp 
 ## Game Feature and Screenshots
 
 ### Features
-- Three board sizes for different levels players.
+- Three board sizes for different skil levels.
 - Flood mechanic to reveal the board if an empty tile is clicked.
-- Right click to add a flag or question mark.
-- Bomb explosion animation, starting from the clicked bomb.
+- Right click mechanic to add a flag or question mark to a tile.
+- Bombs explosion animation, starting from the clicked bomb.
 
 
 
