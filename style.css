@@ -58,7 +58,6 @@
 .levelBtn:hover,
 #reset:hover {
     background-color: rgb(114, 186, 196);
-    font-size: calc(12px + 1.5vmin); 
 }
 
 body {
