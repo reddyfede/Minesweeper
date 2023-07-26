@@ -4,7 +4,7 @@
 * {
     font-family: 'Share Tech Mono', monospace;
     box-sizing: border-box;
-    font-size: 2.5vmin;
+    font-size: calc(10px + 1.5vmin);
 }
 
 #gameName {
@@ -28,14 +28,17 @@
 }
 
 .gameSelector {
-    height: 15vmin;
+    height: calc(65px + 5vmin);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+.gameSelector>h3{
+    margin-bottom: 1vmin;
+}
+
 .gameSelector>div {
-    height: 5vmin;
     width: 55vmin;
     display: flex;
     justify-content: space-around;
@@ -44,7 +47,7 @@
 
 .levelBtn,
 #reset {
-    font-size: 2.5vmin;
+    /* font-size: 2.5vmin; */
     background-color: lightblue;
     border: 0.5vmin solid teal;
     border-radius: 0.5vmin;
@@ -55,7 +58,7 @@
 .levelBtn:hover,
 #reset:hover {
     background-color: rgb(114, 186, 196);
-    font-size: 3vmin;
+    font-size: calc(12px + 1.5vmin); 
 }
 
 body {
@@ -65,15 +68,12 @@ body {
     overflow: hidden;
 }
 
-.gameSelector {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .bombCounter {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: calc(20px + 4vmin);
     gap: 10vmin;
 }
 
@@ -82,10 +82,6 @@ body {
     flex-direction: row;
     justify-content: space-between;
     gap: 0.5vmin;
-}
-
-.bombCounter>div>h3 {
-    margin: 0;
 }
 
 main * {
@@ -130,7 +126,7 @@ main * {
 }
 
 #reset {
-    margin-top: 3vmin;
+    margin-top: 2vmin;
 }
 
 .over,
