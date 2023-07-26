@@ -381,7 +381,7 @@ function revealBombs(target, idx) {
             j++
 
         }, 1000 / board[2])
-    }, 100)
+    }, 200)
 }
 
 //create a bomb-element and append it to the parent element.

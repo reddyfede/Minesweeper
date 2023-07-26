@@ -75,18 +75,22 @@ main * {
 
 .over {
     background-color: rgb(220, 220, 220);
+    border: 0.3vmin solid black;
 }
 
 .rightclicked {
     background-color: yellow;
+    border: 0.1vmin solid black;
 }
 
 .clicked {
     background-color: white;
+    border: 0.1vmin solid black;
 }
 
 .bomb {
     background-color: red;
+    transition: all 0.2s linear;
 }
 
 .flag {
@@ -98,6 +102,7 @@ main * {
 
 .win {
     background-color: green;
+    transition: all 0.1s linear;
 }
 
 .flex-ctr {
