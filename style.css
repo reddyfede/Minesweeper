@@ -19,6 +19,14 @@ body {
 .bombCounter {
     display: flex;
     flex-direction: row;
+    gap: 10vmin;
+}
+
+.bombCounter * {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0.5vmin;
 }
 
 main * {
@@ -36,7 +44,7 @@ main * {
 
 .beginner {
     grid-template-columns: repeat(9, minmax(22px, 3.5vmin));
-    grid-template-rows: repeat(9, minmax(22px,3.5vmin));
+    grid-template-rows: repeat(9, minmax(22px, 3.5vmin));
 }
 
 .intermediate {
@@ -50,8 +58,8 @@ main * {
 }
 
 .gameTile {
-    width: minmax(22px,3.5vmin);
-    height: minmax(22px,3.5vmin);
+    width: minmax(22px, 3.5vmin);
+    height: minmax(22px, 3.5vmin);
     background-color: rgb(179, 179, 179);
     color: black;
     border: 0.1vmin solid black;
@@ -82,10 +90,10 @@ main * {
 }
 
 .flag {
-   background-image: url(./resources/flag.svg);
-   background-repeat: no-repeat;
-   background-position: center;
-   background-size:contain;
+    background-image: url(./resources/flag.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
 }
 
 .win {
@@ -124,4 +132,3 @@ main * {
 .num8 {
     color: grey;
 }
-

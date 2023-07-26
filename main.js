@@ -20,7 +20,8 @@ selectLevelBtnEls = document.querySelectorAll(".levelBtn")
 
 resetBtnEl = document.getElementById("reset")
 
-counterEl = document.getElementById("counter")
+bombCounterEl = document.getElementById("bCounter")
+flagCounterEl = document.getElementById("fCounter")
 
 
 /*----- event listeners -----*/
@@ -49,7 +50,8 @@ function init() {
     boardEl.classList.remove("bomb")
     boardEl.classList.remove("win")
 
-    counterEl.innerText = ""
+    flagCounterEl.innerText = 0
+    
     bombsIdx = []
     unsortedBombsIdx = []
     vIdx = []
@@ -58,7 +60,7 @@ function init() {
     grid = createGrid(0)
     victoryGrid = createGrid("v")
 
-    counterEl.innerText = board[2]
+    bombCounterEl.innerText = board[2]
 
     generateBombs()
     placeBombs()
@@ -397,7 +399,7 @@ function appendBomb(parent) {
 
 //update the flag counter based on the flag on the board.
 function updateCounter() {
-    counterEl.innerText = board[2] - document.querySelectorAll(".flag").length
+    flagCounterEl.innerText = document.querySelectorAll(".flag").length
 }
 
 //if the empty elements of victory-grid correspond to the bombs-index-array the game is won, call render win function.
