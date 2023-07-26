@@ -1,6 +1,6 @@
 /*----- app's state (variables) -----*/
 
-const begBoard = [9, 9, 10]       //row length, col length ,number of bombs
+const begBoard = [9, 9, 10]
 const intBoard = [16, 16, 40]
 const expBoard = [30, 16, 99]
 let bombsIdx
@@ -42,7 +42,7 @@ resetBtnEl.addEventListener("click", init)
 /*----- functions -----*/
 
 
-//initialize the game.
+// initialize the game.
 function init() {
 
     boardEl.addEventListener("click", clickTile)
@@ -67,7 +67,7 @@ function init() {
     populateGrid()
 }
 
-//based on the click of the player assign class value beginner/intermediate/expert to the element storing the baord.
+// based on the click of the player assign class value beginner/intermediate/expert to the element storing the baord.
 function defineBoard(e) {
 
     boardEl.classList.remove("beginner")
@@ -85,7 +85,7 @@ function defineBoard(e) {
     init()
 }
 
-//based on the class value of the element storing the board create the board in the dom appending button element to the board.
+// ased on the class value of the element storing the board create the board in the dom appending button element to the board.
 function createBoard() {
 
     deleteBoard()
@@ -106,7 +106,7 @@ function createBoard() {
     }
 }
 
-//remove every alement appended to the board.
+// remove every alement appended to the board.
 function deleteBoard() {
 
     while (boardEl.firstChild) {
@@ -114,7 +114,7 @@ function deleteBoard() {
     }
 }
 
-//generate a "grid" array of value based on the selected board.
+// enerate a "grid" array of value based on the selected board.
 function createGrid(value) {
 
     let arr = []
@@ -126,7 +126,7 @@ function createGrid(value) {
     return arr
 }
 
-//randomize an array of numbers, representing indexes of the bombs, sort the array.
+// randomize an array of numbers, representing indexes of the bombs, sort the array.
 function generateBombs() {
 
     while (bombsIdx.length < board[2]) {
@@ -148,7 +148,7 @@ function generateBombs() {
     })
 }
 
-//in the game-grid array put "B" at the idexes of the bombs.
+// in the game-grid array put "B" at the idexes of the bombs.
 function placeBombs() {
 
     for (el of bombsIdx) {
@@ -156,7 +156,7 @@ function placeBombs() {
     }
 }
 
-//call checkGrid function to put numbers around bomb tile.
+// all checkGrid function to put numbers around bomb tile.
 function populateGrid() {
 
     let arr = checkGrid(bombsIdx, true)
@@ -168,7 +168,7 @@ function populateGrid() {
     }
 }
 
-//given an array of numbers, return an array of numbers representing indexes of the tiles of the grid around the given array elements.
+// given an array of numbers, return an array of numbers representing indexes of the tiles of the grid around the given array elements.
 function checkGrid(arrOfIdx, boolean) {
 
     let arr = []
@@ -218,7 +218,7 @@ function checkGrid(arrOfIdx, boolean) {
     return arr
 }
 
-//at mouseover or mouseout of a board tile toggle a class.
+// at mouseover or mouseout of a board tile toggle a class.
 function overTile(e) {
 
     if (!e.target.classList.contains("gameTile")) {
@@ -234,7 +234,7 @@ function overTile(e) {
     e.target.classList.toggle("over")
 }
 
-//at rightclick of a board tile cycle between flag - question mark - default. update flag counter.
+// at rightclick of a board tile cycle between flag - question mark - default. update flag counter.
 function rightClickTile(e) {
 
     e.preventDefault()
@@ -265,11 +265,13 @@ function rightClickTile(e) {
     updateCounter()
 }
 
-//at click of a board tile:
-//if the tile is a bomb -> call revealbomb function.
-//if the tile is a number !0 -> reveal the tile. put the value of the element in the victry-grid. call the colorNum function.
-//if the tile is a 0 -> call the checkGrid on that number, iterate for every 0 found by checkGrid. put value of the element in the victory-grid.
-//call checkWin function, update flag counter.
+/**
+* at click of a board tile:
+* if the tile is a bomb -> call revealbomb function.
+* if the tile is a number !0 -> reveal the tile. put the value of the element in the victry-grid. call the colorNum function.
+* if the tile is a 0 -> call the checkGrid on that number, iterate for every 0 found by checkGrid. put value of the element in the victory-grid.
+* call checkWin function, update flag counter.
+*/
 function clickTile(e) {
 
     if (!e.target.classList.contains("gameTile")) {
@@ -336,12 +338,12 @@ function clickTile(e) {
     updateCounter()
 }
 
-//assign a class to the tile based on the innertext.
+// assign a class to the tile based on the innertext.
 function colorNum(el) {
     el.classList.add(`num${el.innerText}`)
 }
 
-//start a timer to call the append bomb function for every elements corresponing to the bombs-index array, starting with the clicked bomb.
+// start a timer to call the append bomb function for every elements corresponing to the bombs-index array, starting with the clicked bomb.
 function revealBombs(target, idx) {
 
     target.innerText = ""
@@ -400,7 +402,7 @@ function revealBombs(target, idx) {
     }, 200)
 }
 
-//create a bomb-element and append it to the parent element.
+// create a bomb-element and append it to the parent element.
 function appendBomb(parent) {
 
     let newBomb = document.createElement("i")
@@ -413,12 +415,12 @@ function appendBomb(parent) {
     parent.appendChild(newBomb)
 }
 
-//update the flag counter based on the flag on the board.
+// update the flag counter based on the flag on the board.
 function updateCounter() {
     flagCounterEl.innerText = document.querySelectorAll(".flag").length
 }
 
-//if the empty elements of victory-grid correspond to the bombs-index-array the game is won, call render win function.
+// if the empty elements of victory-grid correspond to the bombs-index-array the game is won, call render win function.
 function checkWin() {
 
     vIdx.length = 0
@@ -443,7 +445,7 @@ function checkWin() {
     }
 }
 
-//change background color to win color, disable event listener.
+// change background color to win color, disable event listener.
 function renderWin() {
 
     boardEl.classList.add("win")

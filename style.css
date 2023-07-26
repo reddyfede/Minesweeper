@@ -42,7 +42,8 @@
     align-items: center;
 }
 
-.levelBtn, #reset {
+.levelBtn,
+#reset {
     font-size: 2.5vmin;
     background-color: lightblue;
     border: 0.5vmin solid teal;
@@ -51,13 +52,14 @@
     height: fit-content;
 }
 
-.levelBtn:hover, #reset:hover {
+.levelBtn:hover,
+#reset:hover {
     background-color: rgb(114, 186, 196);
     font-size: 3vmin;
 }
 
 body {
-    height: 100%;
+    height: 100vh;
     flex-direction: column;
     background-color: whitesmoke;
     overflow: hidden;
@@ -131,7 +133,8 @@ main * {
     margin-top: 3vmin;
 }
 
-.over, .rightclicked {
+.over,
+.rightclicked {
     background-color: rgb(114, 186, 196);
 }
 
