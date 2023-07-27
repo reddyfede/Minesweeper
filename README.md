@@ -27,14 +27,14 @@ If the player manages to reveal all the safe-tiles the **game is won.**
 - Three board sizes for different skill levels.
   
 - First click is always safe, never a bomb.
-  
-- Game timer to track playtime.
+
+- Right click mechanic to add a flag or question mark to a tile.  
   
 - Flood mechanic to reveal the board if an empty tile is clicked.
   
-- Right click mechanic to add a flag or question mark to a tile.
-  
 - Bombs explosion animation, starting from the clicked bomb.
+  
+- Game timer to track playtime.
 
 ### Gameplay Screenshot
 
