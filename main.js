@@ -325,7 +325,7 @@ function clickTile(e) {
     e.target.classList.remove("flag")
 
     if (grid[idx] === "B") {
-
+        clearInterval(clock)
         boardEl.classList.add("bomb")
         boardEl.removeEventListener("click", clickTile)
         boardEl.removeEventListener("contextmenu", rightClickTile)
@@ -479,6 +479,7 @@ function checkWin() {
 
     if (win) {
         renderWin()
+        clearInterval(clock)
     }
 }
 
