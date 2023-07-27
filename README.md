@@ -2,20 +2,32 @@
 
 As the first solo project of the General Assembly Software Engineering bootcamp I built this Minesweeper game.
 
-[Play the game](https://reddyfede.github.io/Minesweeper/)
+[Play the game!](https://reddyfede.github.io/Minesweeper/)
+
+### Rules
+
+The player must reveal all the safe-tiles of the board without clicking the bomb-tiles.
+
+Clicking a safe-tile reveals a hint about the position of the bombs: a revealed non-bomb tile displays the number of bombs among adjacent tiles.
+
+> Example: A revealed non-bomb tile displaying the number 2 means that there are 2 bombs among the adjacent tiles. 
+
+Right-clicking a tile can be used by the player to position a flag or a question mark, to help visualize the possible position of the bombs.
+
+If the player click a bomb-tile the **game is lost.**
+
+If the player manages to reveal all the safe-tiles the **game is won.**
 
 ## Game Feature and Screenshots
 
 ### Features
-- Three board sizes for different skil levels.
+
+- Three board sizes for different skill levels.
 - First click is always safe, never a bomb.
 - Game timer to track playtime.
 - Flood mechanic to reveal the board if an empty tile is clicked.
 - Right click mechanic to add a flag or question mark to a tile.
 - Bombs explosion animation, starting from the clicked bomb.
-
-
-
 
 ### Gameplay
 
@@ -38,4 +50,4 @@ As the first solo project of the General Assembly Software Engineering bootcamp 
 
 - [x] Timer to keep track of the playtime .
 - [ ] Scoreboard with prompt asking player name.
-- [x] First click always safe
+- [x] First click always safe.

@@ -4,7 +4,7 @@
 
 ### Objective of the game
 
-The player must guess the position of all the bombs, without touching them.
+The player must reveal all the safe tiles of the board without clicking the bomb tiles.
 
 Hints about the position of the bombs are given to the player whenever a non-bomb tile is revealed.
 
