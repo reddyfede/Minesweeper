@@ -44,7 +44,7 @@ function init() {
     boardEl.classList.remove("win")
     clearInterval(clock)
     clockEl.innerText = "000"
-    flagCounterEl.innerText = 0
+    flagCounterEl.innerText = "00"
     bombsIdx = []
     unsortedBombsIdx = []
     vIdx = []
@@ -151,10 +151,10 @@ function placeBombs() {
     }
 }
 
-// all checkGrid function to put numbers around bomb tile.
+// call checkGrid function to put numbers around bomb tile.
 function populateGrid() {
 
-    let arr = checkGrid(bombsIdx, true)
+    let arr = checkGrid(bombsIdx)
 
     for (el of arr) {
         if (grid[el] !== "B") {
@@ -172,7 +172,7 @@ function startClock() {
 }
 
 // given an array of numbers, return an array of numbers representing indexes of the tiles of the grid around the given array elements.
-function checkGrid(arrOfIdx, boolean) {
+function checkGrid(arrOfIdx) {
 
     let arr = []
 
@@ -288,8 +288,8 @@ function rightClickTile(e) {
 * at click of a board tile:
 * if it's the first click call the startGame function.
 * if the tile is a bomb -> call revealbomb function.
-* if the tile is a number !0 -> reveal the tile. put the value of the element in the victry-grid. call the colorNum function.
-* if the tile is a 0 -> call the checkGrid on that number, iterate for every 0 found by checkGrid. put value of the element in the victory-grid.
+* if the tile is a number not0 -> reveal the tile. put the value of the element in the victry-grid. call the colorNum function.
+* if the tile is a 0 -> call the checkGrid on that number, iterate for every 0 found by checkGrid. for every not0 put value of the element in the victory-grid.
 * call checkWin function, update flag counter.
 */
 function clickTile(e) {
@@ -329,7 +329,7 @@ function clickTile(e) {
     } else {
 
         victoryGrid[idx] = 0
-        let checkIfReveal = checkGrid([idx], true)
+        let checkIfReveal = checkGrid([idx])
 
         for (i = 0; i < checkIfReveal.length; i++) {
 
@@ -349,7 +349,7 @@ function clickTile(e) {
                 element.innerText = ""
                 victoryGrid[[checkIfReveal[i]]] = 0
 
-                for (el of checkGrid([checkIfReveal[i]], true)) {
+                for (el of checkGrid([checkIfReveal[i]])) {
 
                     if (!checkIfReveal.includes(el)) {
                         checkIfReveal.push(el)
@@ -445,10 +445,13 @@ function appendBomb(parent) {
 
 // update the flag counter based on the flag on the board.
 function updateCounter() {
-    flagCounterEl.innerText = document.querySelectorAll(".flag").length
+    flagCounterEl.innerText = ("0" + document.querySelectorAll(".flag").length).slice(-2)
 }
 
-// if the empty elements of victory-grid correspond to the bombs-index-array the game is won, call render win function.
+/**
+* if the "v" elements of victory-grid correspond to the elements of the bombs-index-array the game is won, call renderWin function, stop the clock
+* (the victory array is initialized by init() as an array of "v", as long as the grid array)
+*/
 function checkWin() {
 
     vIdx.length = 0
