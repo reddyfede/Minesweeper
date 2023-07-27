@@ -9,6 +9,7 @@ let board
 let grid
 let victoryGrid
 let unsortedBombsIdx
+let clock
 
 
 /*----- cached element references -----*/
@@ -23,6 +24,7 @@ resetBtnEl = document.getElementById("reset")
 bombCounterEl = document.getElementById("bCounter")
 flagCounterEl = document.getElementById("fCounter")
 
+clockEl = document.getElementById("clock")
 
 /*----- event listeners -----*/
 
@@ -50,6 +52,9 @@ function init() {
     boardEl.classList.remove("bomb")
     boardEl.classList.remove("win")
 
+    clearInterval(clock)
+    clockEl.innerText = "000"
+
     flagCounterEl.innerText = 0
 
     bombsIdx = []
@@ -65,6 +70,7 @@ function init() {
     generateBombs()
     placeBombs()
     populateGrid()
+    startClock()
 }
 
 // based on the click of the player assign class value beginner/intermediate/expert to the element storing the baord.
@@ -453,6 +459,12 @@ function renderWin() {
     boardEl.removeEventListener("contextmenu", rightClickTile)
 }
 
+function startClock(){
+
+    clock = setInterval(function () {
+        clockEl.innerText = ("00" + (parseInt(clockEl.innerText)+1) ).slice(-3)
+    },1000)
+}
 
 /*----- start!! -----*/
 
