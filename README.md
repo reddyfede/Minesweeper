@@ -1,10 +1,12 @@
+![Header](./resources/header.png)
+
 # Minesweeper
 
 As the first solo project of the General Assembly Software Engineering bootcamp I built this Minesweeper game.
 
 [Play the game!](https://reddyfede.github.io/Minesweeper/)
 
-### Rules
+## Rules
 
 The player must reveal all the safe-tiles of the board without clicking the bomb-tiles.
 
@@ -23,25 +25,30 @@ If the player manages to reveal all the safe-tiles the **game is won.**
 ### Features
 
 - Three board sizes for different skill levels.
+  
 - First click is always safe, never a bomb.
+  
 - Game timer to track playtime.
+  
 - Flood mechanic to reveal the board if an empty tile is clicked.
+  
 - Right click mechanic to add a flag or question mark to a tile.
+  
 - Bombs explosion animation, starting from the clicked bomb.
 
-### Gameplay
+### Gameplay Screenshot
 
-![Gameplay gif](./resources/gameplay.gif)
+![Gameplay screenshot](./resources/gameplay.gif)
 
-### Won game
+### Won Game Screenshot
 
-![Gameplay gif](./resources/wonGame.gif)
+![Won game screenshot](./resources/wonGame.gif)
 
-### Lost game
+### Lost Game Screenshot
 
-![Gameplay gif](./resources/lostGame.gif)
+![Lost game screenshot](./resources/lostGame.gif)
 
-## Technologies Used
+# Technologies Used
 
 - HTML - CSS - JS
 - DOM manipulation
