@@ -7,6 +7,13 @@
     font-size: calc(10px + 1.5vmin);
 }
 
+body {
+    height: 100vh;
+    flex-direction: column;
+    background-color: whitesmoke;
+    overflow: hidden;
+}
+
 #gameName {
     font-family: 'Black Ops One', cursive;
     text-transform: capitalize;
@@ -51,19 +58,11 @@
     border: 0.5vmin solid teal;
     border-radius: 0.5vmin;
     outline: 0.1vmin solid black;
-    height: fit-content;
 }
 
 .levelBtn:hover,
 #reset:hover {
     background-color: rgb(114, 186, 196);
-}
-
-body {
-    height: 100vh;
-    flex-direction: column;
-    background-color: whitesmoke;
-    overflow: hidden;
 }
 
 .bombCounter {
@@ -93,7 +92,7 @@ main * {
     padding: 2vmin;
     background-color: teal;
     border-radius: 0.5vmin;
-    border: 0.1vmin solid black;
+    border: 0.1vmin solid black; 
 }
 
 .beginner {

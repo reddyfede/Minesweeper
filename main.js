@@ -12,23 +12,16 @@ let unsortedBombsIdx
 let clock
 let firstClick
 
-
 /*----- cached element references -----*/
 
-
 boardEl = document.querySelector(".board")
-
 selectLevelBtnEls = document.querySelectorAll(".levelBtn")
-
 resetBtnEl = document.getElementById("reset")
-
 bombCounterEl = document.getElementById("bCounter")
 flagCounterEl = document.getElementById("fCounter")
-
 clockEl = document.getElementById("clock")
 
 /*----- event listeners -----*/
-
 
 for (btn of selectLevelBtnEls) {
     btn.addEventListener("click", defineBoard)
@@ -38,12 +31,9 @@ boardEl.addEventListener("click", clickTile)
 boardEl.addEventListener("contextmenu", rightClickTile)
 boardEl.addEventListener("mouseover", overTile)
 boardEl.addEventListener("mouseout", overTile)
-
 resetBtnEl.addEventListener("click", init)
 
-
 /*----- functions -----*/
-
 
 // initialize the game variables, render the board.
 function init() {
@@ -52,21 +42,16 @@ function init() {
     boardEl.addEventListener("contextmenu", rightClickTile)
     boardEl.classList.remove("bomb")
     boardEl.classList.remove("win")
-
     clearInterval(clock)
     clockEl.innerText = "000"
-
     flagCounterEl.innerText = 0
-
     bombsIdx = []
     unsortedBombsIdx = []
     vIdx = []
     firstClick = true
-
     createBoard()
     grid = createGrid(0)
     victoryGrid = createGrid("v")
-
     bombCounterEl.innerText = board[2]
 }
 
@@ -130,23 +115,20 @@ function createGrid(value) {
 }
 
 // generate bombs position escluding the position of the first click, populate the grid with bombs and numbers, start the clock.
-function startGame(idx){
+function startGame(idx) {
+
     generateBombs(idx)
     placeBombs()
     populateGrid()
     startClock()
-
     firstClick = false
 }
 
 // randomize an array of numbers, representing indexes of the bombs, sort the array.
 function generateBombs(idx) {
-
     while (bombsIdx.length < board[2]) {
-
         let bomb = Math.floor(Math.random() * board[0] * board[1])
-
-        if (!bombsIdx.includes(bomb) && (bomb !==idx)){
+        if (!bombsIdx.includes(bomb) && (bomb !== idx)) {
             bombsIdx.push(bomb)
         }
     }
@@ -182,11 +164,11 @@ function populateGrid() {
 }
 
 // start and update the game clock
-function startClock(){
-
+function startClock() {
+    
     clock = setInterval(function () {
-        clockEl.innerText = ("00" + (parseInt(clockEl.innerText)+1) ).slice(-3)
-    },1000)
+        clockEl.innerText = ("00" + (parseInt(clockEl.innerText) + 1)).slice(-3)
+    }, 1000)
 }
 
 // given an array of numbers, return an array of numbers representing indexes of the tiles of the grid around the given array elements.
@@ -195,47 +177,47 @@ function checkGrid(arrOfIdx, boolean) {
     let arr = []
 
     for (el of arrOfIdx) {
-
-        //row+1 col+0
+        // check in row+1 col+0
         if (el + board[0] < board[0] * board[1]) {
             arr.push(el + board[0])
         }
-        //row-1 col+0
+
+        // check in row-1 col+0
         if (el - board[0] >= 0) {
             arr.push(el - board[0])
         }
 
-        //row+0 col+1
+        // check in row+0 col+1
         if (el + 1 < board[0] * board[1] && ((el + 1) % (board[0])) !== 0) {
             arr.push(el + 1)
         }
-        //row+0 col-1
+
+        // check in row+0 col-1
         if (el - 1 >= 0 && ((el % board[0]) !== 0)) {
             arr.push(el - 1)
         }
 
+        // check in row+1 col+1
+        if (el + 1 + board[0] < board[0] * board[1] && ((el + 1) % board[0]) !== 0) {
+            arr.push(el + board[0] + 1)
+        }
 
-        if (boolean) {
-            //row+1 col+1
-            if (el + 1 + board[0] < board[0] * board[1] && ((el + 1) % board[0]) !== 0) {
-                arr.push(el + board[0] + 1)
-            }
-            //row-1 col+1
-            if (el + 1 - board[0] > 0 && ((el + 1) % board[0]) !== 0) {
-                arr.push(el - board[0] + 1)
-            }
+        // check in row-1 col+1
+        if (el + 1 - board[0] > 0 && ((el + 1) % board[0]) !== 0) {
+            arr.push(el - board[0] + 1)
+        }
 
+        // check in row+1 col-1
+        if (el - 1 + board[0] < board[0] * board[1] && (el % board[0]) !== 0) {
+            arr.push(el + board[0] - 1)
+        }
 
-            //row+1 col-1
-            if (el - 1 + board[0] < board[0] * board[1] && (el % board[0]) !== 0) {
-                arr.push(el + board[0] - 1)
-            }
-            //row-1 col-1
-            if (el - 1 - board[0] >= 0 && (el % board[0]) !== 0) {
-                arr.push(el - board[0] - 1)
-            }
+        // check in row-1 col-1
+        if (el - 1 - board[0] >= 0 && (el % board[0]) !== 0) {
+            arr.push(el - board[0] - 1)
         }
     }
+
     return arr
 }
 
@@ -268,6 +250,7 @@ function rightClickTile(e) {
     if (!e.target.classList.contains("gameTile")) {
         return
     }
+
     if (e.target.disabled) {
         return
     }
@@ -281,19 +264,23 @@ function rightClickTile(e) {
     e.target.classList.add("rightclicked")
 
     if (e.target.dataset.value === "F") {
+
         e.target.innerText = "?"
         e.target.classList.remove("flag")
         e.target.setAttribute("data-value", "?")
 
     } else if (e.target.dataset.value === "?") {
+
         e.target.innerText = ""
         e.target.setAttribute("data-value", "")
         e.target.classList.remove("rightclicked")
 
     } else {
+
         e.target.classList.add("flag")
         e.target.setAttribute("data-value", "F")
     }
+
     updateCounter()
 }
 
@@ -310,6 +297,7 @@ function clickTile(e) {
     if (!e.target.classList.contains("gameTile")) {
         return
     }
+
     if (e.target.disabled) {
         return
     }
@@ -325,11 +313,11 @@ function clickTile(e) {
     e.target.classList.remove("flag")
 
     if (grid[idx] === "B") {
+
         clearInterval(clock)
         boardEl.classList.add("bomb")
         boardEl.removeEventListener("click", clickTile)
         boardEl.removeEventListener("contextmenu", rightClickTile)
-
         revealBombs(e.target, idx)
 
     } else if (grid[idx] !== 0) {
@@ -341,7 +329,6 @@ function clickTile(e) {
     } else {
 
         victoryGrid[idx] = 0
-
         let checkIfReveal = checkGrid([idx], true)
 
         for (i = 0; i < checkIfReveal.length; i++) {
@@ -363,14 +350,15 @@ function clickTile(e) {
                 victoryGrid[[checkIfReveal[i]]] = 0
 
                 for (el of checkGrid([checkIfReveal[i]], true)) {
+
                     if (!checkIfReveal.includes(el)) {
                         checkIfReveal.push(el)
                     }
                 }
-
             }
         }
     }
+
     checkWin()
     updateCounter()
 }
@@ -387,10 +375,9 @@ function revealBombs(target, idx) {
     appendBomb(target)
     target.classList.remove("flag")
     target.classList.add("bomb")
-
     unsortedBombsIdx.splice(unsortedBombsIdx.indexOf(idx), 1)
-
     resetBtnEl.disabled = true
+
     for (el of selectLevelBtnEls) {
         el.disabled = true
     }
@@ -416,6 +403,7 @@ function revealBombs(target, idx) {
         }
 
         i++
+
     }, 1000 / board[2])
 
     setTimeout(function () {
@@ -426,8 +414,10 @@ function revealBombs(target, idx) {
 
             tile.classList.remove("bomb")
             if (j === unsortedBombsIdx.length - 1) {
+
                 clearInterval(timer2)
                 resetBtnEl.disabled = false
+
                 for (el of selectLevelBtnEls) {
                     el.disabled = false
                 }
@@ -436,6 +426,7 @@ function revealBombs(target, idx) {
             j++
 
         }, 1000 / board[2])
+
     }, 200)
 }
 
@@ -472,6 +463,7 @@ function checkWin() {
     let win = true
 
     for (i = 0; i < vIdx.length; i++) {
+
         if (vIdx[i] !== bombsIdx[i]) {
             win = false
         }
@@ -485,12 +477,11 @@ function checkWin() {
 
 // change background color to win color, disable event listener.
 function renderWin() {
-
+    
     boardEl.classList.add("win")
     boardEl.removeEventListener("click", clickTile)
     boardEl.removeEventListener("contextmenu", rightClickTile)
 }
-
 
 /*----- start!! -----*/
 
