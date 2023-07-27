@@ -36,6 +36,6 @@ As the first solo project of the General Assembly Software Engineering bootcamp 
 
 ## Future Add-on
 
-- ✓ Timer to keep track of the time to win the game.
-- Scoreboard with prompt asking player name.
-- ✓ First click always safe
+- [x] Timer to keep track of the playtime .
+- []Scoreboard with prompt asking player name.
+- [x] First click always safe
