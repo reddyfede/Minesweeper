@@ -8,6 +8,8 @@ As the first solo project of the General Assembly Software Engineering bootcamp 
 
 ### Features
 - Three board sizes for different skil levels.
+- First click is always safe, never a bomb.
+- Game timer to track playtime.
 - Flood mechanic to reveal the board if an empty tile is clicked.
 - Right click mechanic to add a flag or question mark to a tile.
 - Bombs explosion animation, starting from the clicked bomb.
@@ -34,6 +36,6 @@ As the first solo project of the General Assembly Software Engineering bootcamp 
 
 ## Future Add-on
 
-- Timer to keep track of the time to win the game.
+- ✓ Timer to keep track of the time to win the game.
 - Scoreboard with prompt asking player name.
-- First click always safe
+- ✓ First click always safe
