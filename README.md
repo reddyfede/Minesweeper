@@ -37,5 +37,5 @@ As the first solo project of the General Assembly Software Engineering bootcamp 
 ## Future Add-on
 
 - [x] Timer to keep track of the playtime .
-- []Scoreboard with prompt asking player name.
+- [] Scoreboard with prompt asking player name.
 - [x] First click always safe
