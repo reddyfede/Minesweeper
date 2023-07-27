@@ -10,6 +10,7 @@ let grid
 let victoryGrid
 let unsortedBombsIdx
 let clock
+let firstClick
 
 
 /*----- cached element references -----*/
@@ -44,7 +45,7 @@ resetBtnEl.addEventListener("click", init)
 /*----- functions -----*/
 
 
-// initialize the game.
+// initialize the game variables, render the board.
 function init() {
 
     boardEl.addEventListener("click", clickTile)
@@ -60,17 +61,13 @@ function init() {
     bombsIdx = []
     unsortedBombsIdx = []
     vIdx = []
+    firstClick = true
 
     createBoard()
     grid = createGrid(0)
     victoryGrid = createGrid("v")
 
     bombCounterEl.innerText = board[2]
-
-    generateBombs()
-    placeBombs()
-    populateGrid()
-    startClock()
 }
 
 // based on the click of the player assign class value beginner/intermediate/expert to the element storing the baord.
@@ -120,7 +117,7 @@ function deleteBoard() {
     }
 }
 
-// enerate a "grid" array of value based on the selected board.
+// generate a "grid" array of value based on the selected board.
 function createGrid(value) {
 
     let arr = []
@@ -132,14 +129,24 @@ function createGrid(value) {
     return arr
 }
 
+// generate bombs position escluding the position of the first click, populate the grid with bombs and numbers, start the clock.
+function startGame(idx){
+    generateBombs(idx)
+    placeBombs()
+    populateGrid()
+    startClock()
+
+    firstClick = false
+}
+
 // randomize an array of numbers, representing indexes of the bombs, sort the array.
-function generateBombs() {
+function generateBombs(idx) {
 
     while (bombsIdx.length < board[2]) {
 
         let bomb = Math.floor(Math.random() * board[0] * board[1])
 
-        if (!bombsIdx.includes(bomb)) {
+        if (!bombsIdx.includes(bomb) && (bomb !==idx)){
             bombsIdx.push(bomb)
         }
     }
@@ -172,6 +179,14 @@ function populateGrid() {
             grid[el] = grid[el] + 1
         }
     }
+}
+
+// start and update the game clock
+function startClock(){
+
+    clock = setInterval(function () {
+        clockEl.innerText = ("00" + (parseInt(clockEl.innerText)+1) ).slice(-3)
+    },1000)
 }
 
 // given an array of numbers, return an array of numbers representing indexes of the tiles of the grid around the given array elements.
@@ -240,7 +255,12 @@ function overTile(e) {
     e.target.classList.toggle("over")
 }
 
-// at rightclick of a board tile cycle between flag - question mark - default. update flag counter.
+/**
+* at rightclick of a board tile:
+* if it's the first click call the startGame function.
+* each rightclick of cycles between flag - question mark - default
+* update flag counter
+*/
 function rightClickTile(e) {
 
     e.preventDefault()
@@ -250,6 +270,12 @@ function rightClickTile(e) {
     }
     if (e.target.disabled) {
         return
+    }
+
+    let idx = parseInt(e.target.getAttribute("id").slice(3))
+
+    if (firstClick) {
+        startGame(idx)
     }
 
     e.target.classList.add("rightclicked")
@@ -273,6 +299,7 @@ function rightClickTile(e) {
 
 /**
 * at click of a board tile:
+* if it's the first click call the startGame function.
 * if the tile is a bomb -> call revealbomb function.
 * if the tile is a number !0 -> reveal the tile. put the value of the element in the victry-grid. call the colorNum function.
 * if the tile is a 0 -> call the checkGrid on that number, iterate for every 0 found by checkGrid. put value of the element in the victory-grid.
@@ -287,11 +314,15 @@ function clickTile(e) {
         return
     }
 
+    let idx = parseInt(e.target.getAttribute("id").slice(3))
+
+    if (firstClick) {
+        startGame(idx)
+    }
+
     e.target.disabled = true
     e.target.classList.add("clicked")
     e.target.classList.remove("flag")
-
-    let idx = parseInt(e.target.getAttribute("id").slice(3))
 
     if (grid[idx] === "B") {
 
@@ -459,12 +490,6 @@ function renderWin() {
     boardEl.removeEventListener("contextmenu", rightClickTile)
 }
 
-function startClock(){
-
-    clock = setInterval(function () {
-        clockEl.innerText = ("00" + (parseInt(clockEl.innerText)+1) ).slice(-3)
-    },1000)
-}
 
 /*----- start!! -----*/
 
