@@ -10,11 +10,11 @@ As the first solo project of the General Assembly Software Engineering bootcamp 
 
 The player must reveal all the safe-tiles of the board without clicking the bomb-tiles.
 
-Clicking a safe-tile reveals a hint about the position of the bombs: a revealed non-bomb tile displays the number of bombs among adjacent tiles.
+Clicking a safe-tile reveals a hint about the position of the bombs: a revealed safe-bomb tile displays the number of bombs among adjacent tiles.
 
-> Example: A revealed non-bomb tile displaying the number 2 means that there are 2 bombs among the adjacent tiles. 
+> Example: A revealed safe-tile displaying the number 2 means that there are 2 bombs among the adjacent tiles. 
 
-Right-clicking a tile can be used by the player to position a flag or a question mark, to help visualize the possible position of the bombs.
+Right-clicking a tile can be used by the player to position a flag or a question mark, to help visualize the possible positions of the bombs.
 
 If the player click a bomb-tile the **game is lost.**
 
