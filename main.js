@@ -55,7 +55,7 @@ function init() {
     bombCounterEl.innerText = board[2]
 }
 
-// based on the click of the player assign class value beginner/intermediate/expert to the element storing the baord.
+// based on the level selection of the player assign class value beginner/intermediate/expert to the element storing the baord.
 function defineBoard(e) {
 
     boardEl.classList.remove("beginner")
@@ -73,7 +73,7 @@ function defineBoard(e) {
     init()
 }
 
-// ased on the class value of the element storing the board create the board in the dom appending button element to the board.
+// based on the class value of the element storing the board create the board in the dom appending button elements to the board.
 function createBoard() {
 
     deleteBoard()
@@ -94,7 +94,7 @@ function createBoard() {
     }
 }
 
-// remove every alement appended to the board.
+// remove every element appended to the board.
 function deleteBoard() {
 
     while (boardEl.firstChild) {
@@ -102,7 +102,7 @@ function deleteBoard() {
     }
 }
 
-// generate a "grid" array of value based on the selected board.
+// generate an array of "value" based on the selected board.
 function createGrid(value) {
 
     let arr = []
@@ -114,7 +114,7 @@ function createGrid(value) {
     return arr
 }
 
-// generate bombs position escluding the position of the first click, populate the grid with bombs and numbers, start the clock.
+// generate bombs position; populate the game-grid with bombs and numbers; start the clock; reset the firstClick value to false
 function startGame(idx) {
 
     generateBombs(idx)
@@ -124,8 +124,9 @@ function startGame(idx) {
     firstClick = false
 }
 
-// randomize an array of numbers, representing indexes of the bombs, sort the array.
+// randomize an array of numbers that represents the indexes of the bombs, excluding the given idx, sort the array.
 function generateBombs(idx) {
+
     while (bombsIdx.length < board[2]) {
         let bomb = Math.floor(Math.random() * board[0] * board[1])
         if (!bombsIdx.includes(bomb) && (bomb !== idx)) {
@@ -143,7 +144,7 @@ function generateBombs(idx) {
     })
 }
 
-// in the game-grid array put "B" at the idexes of the bombs.
+// in the game-grid array put the value "B" at the idexes of the bombs.
 function placeBombs() {
 
     for (el of bombsIdx) {
@@ -151,7 +152,7 @@ function placeBombs() {
     }
 }
 
-// call checkGrid function to put numbers around bomb tile.
+// call checkGrid function to populate the game-grid with numbers in the positions corrispondg to tiles around the bombs.
 function populateGrid() {
 
     let arr = checkGrid(bombsIdx)
@@ -163,7 +164,7 @@ function populateGrid() {
     }
 }
 
-// start and update the game clock
+// start and update the game clock every 1s
 function startClock() {
     
     clock = setInterval(function () {
@@ -171,7 +172,7 @@ function startClock() {
     }, 1000)
 }
 
-// given an array of numbers, return an array of numbers representing indexes of the tiles of the grid around the given array elements.
+// given an array of numbers, return an array of numbers representing indexes of the tiles of the board around the given array elements.
 function checkGrid(arrOfIdx) {
 
     let arr = []
@@ -240,7 +241,7 @@ function overTile(e) {
 /**
 * at rightclick of a board tile:
 * if it's the first click call the startGame function.
-* each rightclick of cycles between flag - question mark - default
+* each rightclick cycles between flag - question mark - default
 * update flag counter
 */
 function rightClickTile(e) {
@@ -368,7 +369,7 @@ function colorNum(el) {
     el.classList.add(`num${el.innerText}`)
 }
 
-// start a timer to call the append bomb function for every elements corresponing to the bombs-index array, starting with the clicked bomb.
+// start a timer to call the appendBomb function for every elements corresponing to the bombs-index array, starting with the clicked bomb.
 function revealBombs(target, idx) {
 
     target.innerText = ""
@@ -443,7 +444,7 @@ function appendBomb(parent) {
     parent.appendChild(newBomb)
 }
 
-// update the flag counter based on the flag on the board.
+// update the flag counter based on the number of flags on the board.
 function updateCounter() {
     flagCounterEl.innerText = ("0" + document.querySelectorAll(".flag").length).slice(-2)
 }
