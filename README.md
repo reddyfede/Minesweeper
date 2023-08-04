@@ -4,7 +4,7 @@
 
 As the first solo project of the General Assembly Software Engineering bootcamp I built this Minesweeper game.
 
-[Play the game!](https://reddyfede.github.io/Minesweeper/)
+[Play the game!](https://reddyfede.github.io/minesweeper/)
 
 ## Rules
 
